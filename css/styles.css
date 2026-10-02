@@ -761,6 +761,42 @@ textarea.field__control {
   resize: vertical;
 }
 
+.field--trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.consent input {
+  flex: none;
+  margin: 3px 0 0;
+  accent-color: var(--color-gold);
+}
+
+.form__error {
+  margin: 16px 0 0;
+  color: #9b2c2c;
+  font-size: 14px;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+
 .form .btn {
   margin-top: 20px;
 }

@@ -2,6 +2,7 @@
   "use strict";
 
   const MOBILE_MENU_BREAKPOINT = 850;
+  const SUBMIT_TIMEOUT_MS = 15000;
 
   /* ------------------------------------------------------------------
      Menu mobilne
@@ -37,6 +38,7 @@
 
   /* ------------------------------------------------------------------
      Okno zamówienia (natywny <dialog>: obsługuje Esc i pułapkę fokusu)
+     Zgłoszenia trafiają do Arkusza Google przez Apps Script (data-endpoint).
      ------------------------------------------------------------------ */
   const initOrderModal = () => {
     const modal = document.querySelector("[data-order-modal]");
@@ -44,11 +46,21 @@
 
     const form = modal.querySelector("[data-order-form]");
     const success = modal.querySelector("[data-order-success]");
+    const error = modal.querySelector("[data-order-error]");
+    const submit = modal.querySelector("[data-order-submit]");
+    const submitLabel = submit.textContent;
+
+    const setSending = (isSending) => {
+      submit.disabled = isSending;
+      submit.textContent = isSending ? "Wysyłanie…" : submitLabel;
+    };
 
     const resetForm = () => {
       form.reset();
       form.hidden = false;
       success.hidden = true;
+      error.hidden = true;
+      setSending(false);
     };
 
     const isClickOutside = (event) => {
@@ -59,6 +71,16 @@
         event.clientY < box.top ||
         event.clientY > box.bottom
       );
+    };
+
+    const sendOrder = async () => {
+      const response = await fetch(form.dataset.endpoint, {
+        method: "POST",
+        body: new URLSearchParams(new FormData(form)),
+        signal: AbortSignal.timeout(SUBMIT_TIMEOUT_MS),
+      });
+      const result = await response.json();
+      if (!result.ok) throw new Error("Zgłoszenie odrzucone");
     };
 
     document.querySelectorAll("[data-order-open]").forEach((trigger) => {
@@ -76,12 +98,20 @@
       if (event.target === modal && isClickOutside(event)) modal.close();
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      // Wersja demonstracyjna: tu docelowo trafi wysyłka do systemu zamówień.
-      form.hidden = true;
-      success.hidden = false;
-      success.focus();
+      error.hidden = true;
+      setSending(true);
+
+      try {
+        await sendOrder();
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      } catch {
+        error.hidden = false;
+        setSending(false);
+      }
     });
   };
 

@@ -276,36 +276,52 @@
   <dialog class="modal" data-order-modal aria-labelledby="order-title">
     <button class="modal__close" type="button" data-order-close aria-label="Zamknij okno">×</button>
     <p class="section-kicker">Bukiet Wspomnień</p>
-    <h2 class="modal__title" id="order-title">Zamów wiązankę</h2>
+    <h2 class="modal__title" id="order-title">Zostaw kontakt</h2>
     <p class="modal__text">
-      To jest demonstracyjny formularz. W docelowej wersji można podłączyć płatności,
-      mapę cmentarzy i obsługę zamówień.
+      Zostaw numer telefonu, a oddzwonimy, żeby wspólnie ustalić szczegóły.
     </p>
 
-    <form class="form" data-order-form>
+    <form class="form" data-order-form data-endpoint="https://script.google.com/macros/s/AKfycbxsZ86tL5LKEb1F5Wcv5L0a1FZhsMaXB1i4A397Y3_-hI6k3BXQ9ZIv48FNgWLL6v8A/exec">
       <div class="form__grid">
         <div class="field">
           <label class="field__label" for="order-name">Imię</label>
           <input class="field__control" id="order-name" name="name" type="text"
-                 autocomplete="given-name" placeholder="Twoje imię" required>
+                 autocomplete="given-name" placeholder="Twoje imię" maxlength="100" required>
         </div>
         <div class="field">
           <label class="field__label" for="order-phone">Telefon</label>
           <input class="field__control" id="order-phone" name="phone" type="tel"
-                 autocomplete="tel" placeholder="+48" required>
+                 autocomplete="tel" inputmode="tel" placeholder="+48" maxlength="30"
+                 pattern="[0-9+\s\(\)\-]{7,}" title="Podaj poprawny numer telefonu" required>
         </div>
         <div class="field field--full">
           <label class="field__label" for="order-notes">Informacja</label>
-          <textarea class="field__control" id="order-notes" name="notes"
-                    placeholder="Rodzaj wiązanki, termin, dodatkowe informacje..."></textarea>
+          <textarea class="field__control" id="order-notes" name="notes" maxlength="1000"
+                    placeholder="Rodzaj wiązanki, termin, dodatkowe informacje (opcjonalnie)"></textarea>
+        </div>
+
+        <div class="field field--trap" aria-hidden="true">
+          <label for="order-website">Nie wypełniaj tego pola</label>
+          <input id="order-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field field--full">
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            <span>Wyrażam zgodę na kontakt telefoniczny w sprawie mojego zapytania.
+              Podane dane wykorzystamy wyłącznie w tym celu.</span>
+          </label>
         </div>
       </div>
-      <button class="btn btn--gold btn--block" type="submit">Wyślij zapytanie →</button>
+
+      <p class="form__error" data-order-error role="alert" hidden>
+        Nie udało się wysłać zgłoszenia. Spróbuj ponownie za chwilę.
+      </p>
+      <button class="btn btn--gold btn--block" type="submit" data-order-submit>Wyślij zgłoszenie →</button>
     </form>
 
     <p class="form__success" data-order-success role="status" tabindex="-1" hidden>
-      Dziękujemy! To wersja demonstracyjna, więc dane nie zostały nigdzie wysłane.
-      W wersji produkcyjnej trafią do systemu zamówień.
+      Dziękujemy! Skontaktujemy się z Tobą wkrótce.
     </p>
   </dialog>
 </body>
