@@ -37,6 +37,9 @@
   --color-footer: #34382a;
   --color-menu: rgba(48, 48, 39, 0.96);
   --color-overlay: rgba(20, 20, 16, 0.62);
+  --color-success: #2e7d4f;
+  --color-success-bg: #eef7f1;
+  --color-success-text: #1f5a37;
   --text-shadow-hero: 0 1px 3px rgba(20, 18, 12, 0.5), 0 2px 18px rgba(20, 18, 12, 0.45);
   --color-line: rgba(63, 68, 48, 0.15);
 
@@ -802,12 +805,38 @@ textarea.field__control {
 }
 
 .form__success {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin: 20px 0 0;
   padding: 18px;
-  border: 1px solid var(--color-gold);
+  border: 1px solid var(--color-success);
   border-radius: var(--radius-field);
-  color: var(--color-olive);
-  font-size: 14px;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.form__success[hidden] {
+  display: none;
+}
+
+.form__success-icon {
+  flex: none;
+  color: var(--color-success);
+  animation: success-pop 0.4s ease-out;
+}
+
+@keyframes success-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* 16. Responsywność
@@ -951,6 +980,7 @@ textarea.field__control {
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }

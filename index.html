@@ -276,8 +276,8 @@
   <dialog class="modal" data-order-modal aria-labelledby="order-title">
     <button class="modal__close" type="button" data-order-close aria-label="Zamknij okno">×</button>
     <p class="section-kicker">Bukiet Wspomnień</p>
-    <h2 class="modal__title" id="order-title">Zostaw kontakt</h2>
-    <p class="modal__text">
+    <h2 class="modal__title" id="order-title" data-order-title>Zostaw kontakt</h2>
+    <p class="modal__text" data-order-lead>
       Zostaw numer telefonu, a oddzwonimy, żeby wspólnie ustalić szczegóły.
     </p>
 
@@ -321,7 +321,12 @@
     </form>
 
     <p class="form__success" data-order-success role="status" tabindex="-1" hidden>
-      Dziękujemy! Skontaktujemy się z Tobą wkrótce.
+      <svg class="form__success-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+        <circle cx="12" cy="12" r="12" fill="currentColor"/>
+        <path d="M7 12.5l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Dziękujemy! Skontaktujemy się z Tobą wkrótce.</span>
     </p>
   </dialog>
 </body>

@@ -3,6 +3,7 @@
 
   const MOBILE_MENU_BREAKPOINT = 850;
   const SUBMIT_TIMEOUT_MS = 15000;
+  const SUCCESS_TITLE = "Dziękujemy za kontakt!";
 
   /* ------------------------------------------------------------------
      Menu mobilne
@@ -48,7 +49,10 @@
     const success = modal.querySelector("[data-order-success]");
     const error = modal.querySelector("[data-order-error]");
     const submit = modal.querySelector("[data-order-submit]");
+    const title = modal.querySelector("[data-order-title]");
+    const lead = modal.querySelector("[data-order-lead]");
     const submitLabel = submit.textContent;
+    const titleLabel = title.textContent;
 
     const setSending = (isSending) => {
       submit.disabled = isSending;
@@ -60,6 +64,8 @@
       form.hidden = false;
       success.hidden = true;
       error.hidden = true;
+      lead.hidden = false;
+      title.textContent = titleLabel;
       setSending(false);
     };
 
@@ -106,6 +112,8 @@
       try {
         await sendOrder();
         form.hidden = true;
+        lead.hidden = true;
+        title.textContent = SUCCESS_TITLE;
         success.hidden = false;
         success.focus();
       } catch {
