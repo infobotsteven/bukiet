@@ -1,0 +1,884 @@
+/* ==========================================================================
+   Bukiet Wspomnień - landing page
+   Spis treści:
+   1. Zmienne
+   2. Reset i style bazowe
+   3. Układ i narzędzia
+   4. Przyciski
+   5. Nagłówek i nawigacja
+   6. Hero
+   7. Pasek zalet
+   8. Sekcje (wspólne)
+   9. Oferta
+  10. O nas
+  11. Jak zamówić
+  12. Galeria
+  13. CTA końcowe
+  14. Stopka
+  15. Okno zamówienia i formularz
+  16. Responsywność
+  17. Preferencje użytkownika
+   ========================================================================== */
+
+/* 1. Zmienne
+   ========================================================================== */
+:root {
+  --color-cream: #f8f3ec;
+  --color-cream-dark: #f1e9df;
+  --color-paper: #fffdf9;
+  --color-white: #fff;
+  --color-olive: #3f4430;
+  --color-gold: #b88a52;
+  --color-gold-dark: #a87943;
+  --color-gold-light: #d9b27c;
+  --color-gold-pale: #f0d5ae;
+  --color-text: #302d27;
+  --color-muted: #777166;
+  --color-footer: #34382a;
+  --color-menu: rgba(48, 48, 39, 0.96);
+  --color-overlay: rgba(20, 20, 16, 0.62);
+  --color-line: rgba(63, 68, 48, 0.15);
+
+  --shadow-soft: 0 8px 25px rgba(55, 45, 35, 0.05);
+  --shadow-card: 0 20px 55px rgba(62, 52, 39, 0.12);
+  --shadow-modal: 0 30px 80px rgba(0, 0, 0, 0.25);
+
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+
+  --radius-card: 18px;
+  --radius-field: 10px;
+  --radius-pill: 999px;
+
+  --container-width: 1180px;
+  --container-gutter: 40px;
+  --transition: 0.2s ease;
+}
+
+/* 2. Reset i style bazowe
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-cream);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+h1 {
+  margin: 0 0 25px;
+  font-size: clamp(48px, 6vw, 78px);
+}
+
+h2 {
+  margin: 0 0 15px;
+  color: var(--color-olive);
+  font-size: clamp(38px, 4vw, 54px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* 3. Układ i narzędzia
+   ========================================================================== */
+.container {
+  width: min(var(--container-width), calc(100% - var(--container-gutter)));
+  margin-inline: auto;
+}
+
+.section {
+  padding: 105px 0;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 200;
+  top: 0;
+  left: 20px;
+  padding: 10px 16px;
+  border-radius: 0 0 var(--radius-field) var(--radius-field);
+  background: var(--color-white);
+  color: var(--color-olive);
+  transform: translateY(-100%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* 4. Przyciski
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.btn--gold {
+  background: var(--color-gold);
+  color: var(--color-white);
+}
+
+.btn--gold:hover {
+  background: var(--color-gold-dark);
+  transform: translateY(-1px);
+}
+
+.btn--outline {
+  border: 1px solid var(--color-gold);
+  background: transparent;
+  color: var(--color-gold);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* 5. Nagłówek i nawigacja
+   ========================================================================== */
+.site-header {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
+  color: var(--color-white);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  height: 92px;
+}
+
+.brand {
+  width: 150px;
+  padding: 7px 12px 5px;
+  border-radius: 0 0 14px 14px;
+  background: var(--color-white);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.brand img {
+  width: 100%;
+  height: auto;
+}
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nav__links a {
+  opacity: 0.94;
+  transition: color var(--transition), opacity var(--transition);
+}
+
+.nav__links a:hover {
+  color: var(--color-gold-pale);
+  opacity: 1;
+}
+
+.nav__toggle {
+  display: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-white);
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.nav__toggle::before {
+  content: "\2630";
+}
+
+.nav__toggle[aria-expanded="true"]::before {
+  content: "\2715";
+}
+
+/* 6. Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 730px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(38, 35, 28, 0.58) 0%,
+      rgba(38, 35, 28, 0.28) 42%,
+      rgba(38, 35, 28, 0.05) 72%
+    ),
+    var(--hero-image) center / cover no-repeat;
+  color: var(--color-white);
+  --hero-image: url("../assets/images/hero-1280.webp");
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 110px;
+  background: linear-gradient(transparent, var(--color-cream));
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 610px;
+  padding-top: 85px;
+}
+
+.hero__eyebrow {
+  margin: 0 0 18px;
+  color: var(--color-gold-light);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.hero__copy {
+  max-width: 510px;
+  margin: 0 0 32px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+}
+
+.hero__note {
+  margin: 20px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* 7. Pasek zalet
+   ========================================================================== */
+.trust {
+  position: relative;
+  z-index: 3;
+  margin-top: -38px;
+}
+
+.trust__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 249, 0.96);
+  box-shadow: var(--shadow-card);
+}
+
+.trust__item {
+  padding: 25px 20px;
+  border-right: 1px solid var(--color-line);
+  text-align: center;
+}
+
+.trust__item:last-child {
+  border-right: 0;
+}
+
+.trust__icon {
+  margin-bottom: 6px;
+  color: var(--color-gold);
+  font-size: 24px;
+}
+
+.trust__label {
+  display: block;
+  color: var(--color-olive);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* 8. Sekcje (wspólne)
+   ========================================================================== */
+.section-head {
+  max-width: 760px;
+  margin: 0 auto 52px;
+  text-align: center;
+}
+
+.section-head p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.section-kicker {
+  margin: 0 0 12px;
+  color: var(--color-gold);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* 9. Oferta
+   ========================================================================== */
+.offers {
+  background: var(--color-paper);
+}
+
+.offers__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-5px);
+}
+
+.card__image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.card__body {
+  padding: 24px;
+}
+
+.card__title {
+  margin: 0 0 9px;
+  color: var(--color-olive);
+  font-size: 28px;
+}
+
+.card__text {
+  margin: 0 0 18px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.card__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* 10. O nas
+   ========================================================================== */
+.story {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: 560px;
+  padding: 0;
+  background: var(--color-cream-dark);
+}
+
+.story__image {
+  min-height: 560px;
+  background: url("../assets/images/story.webp") center / cover;
+}
+
+.story__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 90px max(40px, 7vw);
+}
+
+.story__title {
+  font-size: 50px;
+}
+
+.story__text {
+  max-width: 500px;
+  margin: 0 0 1em;
+  color: var(--color-muted);
+}
+
+.story__divider {
+  width: 90px;
+  height: 1px;
+  margin: 20px 0;
+  border: 0;
+  background: var(--color-gold);
+}
+
+/* 11. Jak zamówić
+   ========================================================================== */
+.process {
+  background: var(--color-paper);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.step {
+  padding: 15px;
+  text-align: center;
+}
+
+.step__number {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 18px;
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  color: var(--color-gold);
+  font-family: var(--font-serif);
+  font-size: 20px;
+}
+
+.step__title {
+  margin: 0 0 8px;
+  color: var(--color-olive);
+  font-size: 25px;
+}
+
+.step__text {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+/* 12. Galeria
+   ========================================================================== */
+.gallery {
+  background: var(--color-cream);
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+}
+
+.gallery__side {
+  display: grid;
+  gap: 18px;
+}
+
+.gallery__item {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.gallery__item img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.gallery__item--big img {
+  height: 560px;
+}
+
+.gallery__item--small img {
+  height: 271px;
+}
+
+/* 13. CTA końcowe
+   ========================================================================== */
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(46, 44, 35, 0.78), rgba(46, 44, 35, 0.35)),
+    url("../assets/images/cta.webp") center / cover;
+  color: var(--color-white);
+}
+
+.final-cta .container {
+  display: flex;
+  align-items: center;
+  min-height: 430px;
+}
+
+.final-cta__copy {
+  max-width: 600px;
+}
+
+.final-cta__title {
+  color: var(--color-white);
+  font-size: 54px;
+}
+
+.final-cta__text {
+  margin: 0 0 28px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 17px;
+}
+
+/* 14. Stopka
+   ========================================================================== */
+.site-footer {
+  padding: 55px 0 25px;
+  background: var(--color-footer);
+  color: #f4eee5;
+}
+
+.site-footer p,
+.site-footer a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+}
+
+.site-footer p {
+  margin: 0 0 1em;
+}
+
+.site-footer a:hover {
+  color: var(--color-white);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 35px;
+}
+
+.site-footer .footer__brand {
+  margin: 0 0 0.3em;
+  color: inherit;
+  font-family: var(--font-serif);
+  font-size: 28px;
+}
+
+.footer__title {
+  margin: 0 0 1em;
+  color: var(--color-gold-light);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.footer__copyright {
+  margin-top: 35px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.site-footer .footer__copyright p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+}
+
+/* 15. Okno zamówienia i formularz
+   ========================================================================== */
+.modal {
+  width: min(560px, calc(100% - 40px));
+  max-height: calc(100% - 40px);
+  padding: 35px;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 20px;
+  background: var(--color-paper);
+  color: var(--color-text);
+  box-shadow: var(--shadow-modal);
+}
+
+.modal::backdrop {
+  background: var(--color-overlay);
+}
+
+.modal__close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal__title {
+  margin: 0 0 5px;
+  color: var(--color-olive);
+  font-size: 34px;
+}
+
+.modal__text {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field {
+  margin-top: 14px;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-olive);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.field__control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-field);
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+.field__control:focus {
+  border-color: var(--color-gold);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(184, 138, 82, 0.25);
+}
+
+textarea.field__control {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.form .btn {
+  margin-top: 20px;
+}
+
+.form__success {
+  margin: 20px 0 0;
+  padding: 18px;
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-field);
+  color: var(--color-olive);
+  font-size: 14px;
+}
+
+/* 16. Responsywność
+   ========================================================================== */
+@media (max-width: 850px) {
+  .nav__toggle {
+    display: block;
+  }
+
+  .nav > .btn {
+    display: none;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav.is-open .nav__links {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--color-menu);
+  }
+
+  .hero {
+    --hero-image: url("../assets/images/hero-800.webp");
+    min-height: 720px;
+    background-position: 65% center;
+  }
+
+  .hero__content {
+    padding-top: 120px;
+  }
+
+  .trust__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trust__item:nth-child(2) {
+    border-right: 0;
+  }
+
+  .trust__item:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .offers__grid,
+  .story,
+  .gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story__image {
+    min-height: 400px;
+  }
+
+  .steps,
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gallery__item--big img {
+    height: 430px;
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    width: min(var(--container-width), calc(100% - 28px));
+  }
+
+  .section {
+    padding: 75px 0;
+  }
+
+  .nav {
+    height: 78px;
+  }
+
+  .brand {
+    width: 130px;
+  }
+
+  .hero {
+    min-height: 680px;
+  }
+
+  h1 {
+    font-size: 46px;
+  }
+
+  .hero__copy {
+    font-size: 16px;
+  }
+
+  .trust__item {
+    padding: 18px 10px;
+  }
+
+  .steps,
+  .footer__grid,
+  .form__grid,
+  .gallery__side {
+    grid-template-columns: 1fr;
+  }
+
+  .field--full {
+    grid-column: auto;
+  }
+
+  .story__copy {
+    padding: 65px 25px;
+  }
+
+  .modal {
+    padding: 28px 22px;
+  }
+}
+
+/* 17. Preferencje użytkownika
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

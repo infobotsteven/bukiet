@@ -3,506 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bukiet Wspomnień - eleganckie wiązanki z sercem, przygotowywane z dbałością o każdy detal.">
   <title>Bukiet Wspomnień | Wiązanki z sercem</title>
-  <style>
-    :root{
-      --cream:#f8f3ec;
-      --cream-2:#f1e9df;
-      --paper:#fffdf9;
-      --olive:#3f4430;
-      --olive-2:#687054;
-      --gold:#b88a52;
-      --gold-light:#d9b27c;
-      --burgundy:#8c2349;
-      --text:#302d27;
-      --muted:#777166;
-      --line:rgba(63,68,48,.15);
-      --shadow:0 20px 55px rgba(62,52,39,.12);
-      --serif: Georgia, "Times New Roman", serif;
-      --sans: Arial, Helvetica, sans-serif;
-    }
+  <meta name="description" content="Bukiet Wspomnień - eleganckie wiązanki z sercem, przygotowywane z dbałością o każdy detal.">
+  <meta name="theme-color" content="#f8f3ec">
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--text);
-      background:var(--cream);
-      font-family:var(--sans);
-      line-height:1.6;
-    }
-    img{max-width:100%;display:block}
-    a{color:inherit;text-decoration:none}
-    button,input,textarea{font:inherit}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:title" content="Bukiet Wspomnień | Wiązanki z sercem">
+  <meta property="og:description" content="Eleganckie wiązanki z naturalnych kwiatów, przygotowywane z dbałością o każdy detal.">
 
-    .container{width:min(1180px,calc(100% - 40px));margin:auto}
-
-    /* HEADER */
-    header{
-      position:absolute;
-      z-index:10;
-      top:0;left:0;right:0;
-      color:#fff;
-    }
-    .nav{
-      height:92px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:30px;
-    }
-    .brand{
-      width:150px;
-      background:#fff;
-      border-radius:0 0 14px 14px;
-      padding:7px 12px 5px;
-      box-shadow:0 8px 25px rgba(0,0,0,.08);
-    }
-    .brand img{width:100%;height:auto}
-    .nav-links{display:flex;gap:32px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
-    .nav-links a{opacity:.94}
-    .nav-links a:hover{opacity:1;color:#f0d5ae}
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      border:0;
-      cursor:pointer;
-      padding:14px 24px;
-      border-radius:999px;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:12px;
-      font-weight:600;
-      transition:.2s ease;
-    }
-    .btn-gold{background:var(--gold);color:#fff}
-    .btn-gold:hover{background:#a87943;transform:translateY(-1px)}
-    .btn-outline{border:1px solid var(--gold);background:transparent;color:var(--gold)}
-    .menu-toggle{display:none;background:none;border:0;color:#fff;font-size:27px}
-
-    /* HERO */
-    .hero{
-      min-height:730px;
-      position:relative;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      background:
-        linear-gradient(90deg,rgba(38,35,28,.58) 0%,rgba(38,35,28,.28) 42%,rgba(38,35,28,.05) 72%),
-        url("assets/hero-wiazanka.png") center/cover no-repeat;
-      color:#fff;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;inset:auto 0 0;
-      height:110px;
-      background:linear-gradient(transparent,var(--cream));
-    }
-    .hero-content{position:relative;z-index:2;padding-top:85px;max-width:610px}
-    .eyebrow{
-      text-transform:uppercase;
-      letter-spacing:.3em;
-      font-size:12px;
-      color:var(--gold-light);
-      margin-bottom:18px;
-    }
-    h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.08}
-    h1{font-size:clamp(48px,6vw,78px);margin:0 0 25px}
-    .hero-copy{font-size:18px;max-width:510px;color:rgba(255,255,255,.9);margin-bottom:32px}
-    .hero-note{margin-top:20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
-
-    /* TRUST BAR */
-    .trust{
-      position:relative;
-      z-index:3;
-      margin-top:-38px;
-    }
-    .trust-inner{
-      background:rgba(255,253,249,.96);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      overflow:hidden;
-    }
-    .trust-item{
-      padding:25px 20px;
-      text-align:center;
-      border-right:1px solid var(--line);
-    }
-    .trust-item:last-child{border:0}
-    .trust-icon{font-size:24px;color:var(--gold);margin-bottom:6px}
-    .trust-item strong{
-      display:block;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      color:var(--olive);
-    }
-
-    /* SECTIONS */
-    section{padding:105px 0}
-    .section-head{text-align:center;max-width:760px;margin:0 auto 52px}
-    .section-kicker{
-      color:var(--gold);
-      text-transform:uppercase;
-      letter-spacing:.3em;
-      font-size:11px;
-      margin-bottom:12px;
-    }
-    h2{font-size:clamp(38px,4vw,54px);margin:0 0 15px;color:var(--olive)}
-    .section-head p{color:var(--muted);margin:0}
-
-    /* OFFER */
-    .offers{background:var(--paper)}
-    .offer-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:22px;
-    }
-    .card{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 8px 25px rgba(55,45,35,.05);
-      transition:.25s ease;
-    }
-    .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-    .card-image{height:320px;object-fit:cover;width:100%}
-    .card-body{padding:24px}
-    .card-body h3{font-size:28px;color:var(--olive);margin:0 0 9px}
-    .card-body p{color:var(--muted);margin:0 0 18px;font-size:14px}
-    .card-link{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.15em;font-weight:bold}
-
-    /* STORY */
-    .story{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      min-height:560px;
-      padding:0;
-      background:var(--cream-2);
-    }
-    .story-image{min-height:560px;background:url("assets/wiazanka-lampion.png") center/cover}
-    .story-copy{padding:90px max(40px,7vw);display:flex;flex-direction:column;justify-content:center}
-    .story-copy h2{font-size:50px}
-    .story-copy p{max-width:500px;color:var(--muted)}
-    .divider{width:90px;height:1px;background:var(--gold);margin:20px 0}
-
-    /* PROCESS */
-    .process{background:var(--paper)}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-    .step{text-align:center;padding:15px}
-    .step-num{
-      width:54px;height:54px;border:1px solid var(--gold);
-      border-radius:50%;display:grid;place-items:center;
-      margin:0 auto 18px;color:var(--gold);font-family:var(--serif);font-size:20px
-    }
-    .step h3{font-size:25px;margin:0 0 8px;color:var(--olive)}
-    .step p{font-size:14px;color:var(--muted);margin:0}
-
-    /* GALLERY */
-    .gallery{background:var(--cream)}
-    .gallery-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-    .gallery-big,.gallery-small{border-radius:18px;overflow:hidden}
-    .gallery-big img{height:560px;width:100%;object-fit:cover}
-    .gallery-side{display:grid;gap:18px}
-    .gallery-small img{height:271px;width:100%;object-fit:cover}
-
-    /* CTA */
-    .final-cta{
-      position:relative;
-      overflow:hidden;
-      color:#fff;
-      background:
-        linear-gradient(90deg,rgba(46,44,35,.78),rgba(46,44,35,.35)),
-        url("assets/kompozycja-lampion.png") center/cover;
-    }
-    .final-cta .container{min-height:430px;display:flex;align-items:center}
-    .cta-copy{max-width:600px}
-    .cta-copy h2{color:#fff;font-size:54px}
-    .cta-copy p{color:rgba(255,255,255,.85);font-size:17px;margin-bottom:28px}
-
-    /* FOOTER */
-    footer{background:#34382a;color:#f4eee5;padding:55px 0 25px}
-    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}
-    .footer-brand{font-family:var(--serif);font-size:28px}
-    footer p, footer a{color:rgba(255,255,255,.7);font-size:13px}
-    footer h4{text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--gold-light)}
-    .copyright{border-top:1px solid rgba(255,255,255,.12);margin-top:35px;padding-top:18px;color:rgba(255,255,255,.45);font-size:11px}
-
-    /* MODAL */
-    .modal{
-      position:fixed;inset:0;z-index:100;
-      display:none;place-items:center;
-      background:rgba(20,20,16,.62);padding:20px;
-    }
-    .modal.open{display:grid}
-    .modal-box{
-      width:min(560px,100%);background:var(--paper);border-radius:20px;
-      padding:35px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)
-    }
-    .modal-close{position:absolute;right:18px;top:14px;border:0;background:none;font-size:27px;color:var(--muted);cursor:pointer}
-    .modal h3{font-size:34px;color:var(--olive);margin:0 0 5px}
-    .modal p{color:var(--muted);font-size:14px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .field{margin-top:14px}
-    .field.full{grid-column:1/-1}
-    label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--olive);margin-bottom:6px}
-    input,textarea{
-      width:100%;border:1px solid var(--line);border-radius:10px;
-      padding:12px;background:#fff;color:var(--text);outline:none
-    }
-    input:focus,textarea:focus{border-color:var(--gold)}
-    textarea{min-height:90px;resize:vertical}
-    .modal .btn{margin-top:20px;width:100%}
-
-    @media(max-width:850px){
-      .nav-links,.nav>.btn{display:none}
-      .menu-toggle{display:block}
-      .nav.open .nav-links{
-        display:flex;position:absolute;top:80px;left:20px;right:20px;
-        background:rgba(48,48,39,.96);padding:20px;border-radius:14px;
-        flex-direction:column;gap:18px
-      }
-      .hero{min-height:720px;background-position:65% center}
-      .hero-content{padding-top:120px}
-      .trust-inner{grid-template-columns:repeat(2,1fr)}
-      .trust-item:nth-child(2){border-right:0}
-      .trust-item:nth-child(-n+2){border-bottom:1px solid var(--line)}
-      .offer-grid{grid-template-columns:1fr}
-      .story{grid-template-columns:1fr}
-      .story-image{min-height:400px}
-      .steps{grid-template-columns:1fr 1fr}
-      .gallery-grid{grid-template-columns:1fr}
-      .gallery-big img{height:430px}
-      .footer-grid{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:520px){
-      .container{width:min(100% - 28px,1180px)}
-      .nav{height:78px}
-      .brand{width:130px}
-      .hero{min-height:680px}
-      h1{font-size:46px}
-      .hero-copy{font-size:16px}
-      section{padding:75px 0}
-      .trust-item{padding:18px 10px}
-      .steps{grid-template-columns:1fr}
-      .gallery-side{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr}
-      .form-grid{grid-template-columns:1fr}
-      .field.full{grid-column:auto}
-      .story-copy{padding:65px 25px}
-    }
-  </style>
+  <link rel="preload" as="image" href="assets/images/hero-800.webp" media="(max-width: 850px)">
+  <link rel="preload" as="image" href="assets/images/hero-1280.webp" media="(min-width: 851px)">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Przejdź do treści</a>
 
-<header>
-  <nav class="nav container" id="nav">
-    <a class="brand" href="#top" aria-label="Bukiet Wspomnień">
-      <img src="assets/logo-oficjalne.jpg" alt="Bukiet Wspomnień">
-    </a>
-    <div class="nav-links">
-      <a href="#oferta">Oferta</a>
-      <a href="#o-nas">O nas</a>
-      <a href="#jak-zamowic">Jak zamówić</a>
-      <a href="#kontakt">Kontakt</a>
-    </div>
-    <button class="btn btn-gold js-order">Zamów wiązankę →</button>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
-  </nav>
-</header>
+  <header class="site-header">
+    <nav class="nav container" data-nav aria-label="Menu główne">
+      <a class="brand" href="#top" aria-label="Bukiet Wspomnień - początek strony">
+        <img src="assets/images/logo.webp" alt="Bukiet Wspomnień" width="400" height="400">
+      </a>
 
-<main id="top">
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="eyebrow">Bukiet Wspomnień</div>
-      <h1>Z szacunkiem<br>i dbałością<br>o każdy detal</h1>
-      <p class="hero-copy">
-        Eleganckie wiązanki tworzone z naturalnych kwiatów,
-        aby pięknie wyrazić pamięć o bliskiej osobie.
-      </p>
-      <button class="btn btn-gold js-order">Zamów wiązankę →</button>
-      <div class="hero-note">Ręczne wykonanie · świeże kwiaty · dostawa na miejsce</div>
-    </div>
-  </section>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#oferta">Oferta</a></li>
+        <li><a href="#o-nas">O nas</a></li>
+        <li><a href="#jak-zamowic">Jak zamówić</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
 
-  <div class="trust container">
-    <div class="trust-inner">
-      <div class="trust-item"><div class="trust-icon">✿</div><strong>Świeże kwiaty</strong></div>
-      <div class="trust-item"><div class="trust-icon">❋</div><strong>Ręczne wykonanie</strong></div>
-      <div class="trust-item"><div class="trust-icon">♡</div><strong>Z sercem i troską</strong></div>
-      <div class="trust-item"><div class="trust-icon">⌖</div><strong>Dostawa na miejsce</strong></div>
-    </div>
-  </div>
+      <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+      <button class="nav__toggle" type="button" data-nav-toggle
+              aria-label="Menu" aria-controls="nav-links" aria-expanded="false"></button>
+    </nav>
+  </header>
 
-  <section class="offers" id="oferta">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">Nasza oferta</div>
-        <h2>Wybierz kompozycję<br>pełną znaczenia</h2>
-        <p>Każdą wiązankę przygotowujemy z myślą o charakterze uroczystości i osobie, której jest poświęcona.</p>
+  <main id="main">
+    <div id="top"></div>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__content">
+        <p class="hero__eyebrow">Bukiet Wspomnień</p>
+        <h1 id="hero-title">Z szacunkiem<br>i dbałością<br>o każdy detal</h1>
+        <p class="hero__copy">
+          Eleganckie wiązanki tworzone z naturalnych kwiatów,
+          aby pięknie wyrazić pamięć o bliskiej osobie.
+        </p>
+        <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+        <p class="hero__note">Ręczne wykonanie · świeże kwiaty · dostawa na miejsce</p>
       </div>
+    </section>
 
-      <div class="offer-grid">
-        <article class="card">
-          <img class="card-image" src="assets/kompozycja-pozegnanie.png" alt="Elegancka wiązanka z białych kwiatów">
-          <div class="card-body">
-            <h3>Wiązanki klasyczne</h3>
-            <p>Stonowane kompozycje z lilii, róż, zieleni i delikatnych kwiatów uzupełniających.</p>
-            <a class="card-link js-order" href="#">Zobacz ofertę →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img class="card-image" src="assets/kompozycja-orchidea.png" alt="Kompozycja z orchideą">
-          <div class="card-body">
-            <h3>Wiązanki premium</h3>
-            <p>Starannie dobrane kwiaty i bardziej rozbudowane kompozycje dla wyjątkowych chwil.</p>
-            <a class="card-link js-order" href="#">Zobacz ofertę →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img class="card-image" src="assets/kompozycja-lampion.png" alt="Wiązanka przy nagrobku">
-          <div class="card-body">
-            <h3>Wiązanki na uroczystość</h3>
-            <p>Eleganckie kompozycje przygotowane z myślą o ceremonii pożegnania.</p>
-            <a class="card-link js-order" href="#">Zobacz ofertę →</a>
-          </div>
-        </article>
-      </div>
+    <div class="trust container">
+      <ul class="trust__list">
+        <li class="trust__item">
+          <div class="trust__icon" aria-hidden="true">✿</div>
+          <strong class="trust__label">Świeże kwiaty</strong>
+        </li>
+        <li class="trust__item">
+          <div class="trust__icon" aria-hidden="true">❋</div>
+          <strong class="trust__label">Ręczne wykonanie</strong>
+        </li>
+        <li class="trust__item">
+          <div class="trust__icon" aria-hidden="true">♡</div>
+          <strong class="trust__label">Z sercem i troską</strong>
+        </li>
+        <li class="trust__item">
+          <div class="trust__icon" aria-hidden="true">⌖</div>
+          <strong class="trust__label">Dostawa na miejsce</strong>
+        </li>
+      </ul>
     </div>
-  </section>
 
-  <section class="story" id="o-nas">
-    <div class="story-image"></div>
-    <div class="story-copy">
-      <div class="section-kicker">Bukiet Wspomnień</div>
-      <h2>Piękno, które zostaje w pamięci</h2>
-      <div class="divider"></div>
-      <p>
-        Wierzymy, że kwiaty potrafią powiedzieć więcej niż słowa.
-        Dlatego tworzymy wiązanki spokojne, eleganckie i pełne znaczenia.
-        Każda kompozycja jest przygotowywana indywidualnie, z dbałością o najmniejszy szczegół.
-      </p>
-      <div><button class="btn btn-outline js-order">Poznaj ofertę →</button></div>
-    </div>
-  </section>
+    <section class="section offers" id="oferta" aria-labelledby="offers-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Nasza oferta</p>
+          <h2 id="offers-title">Wybierz kompozycję<br>pełną znaczenia</h2>
+          <p>Każdą wiązankę przygotowujemy z myślą o charakterze uroczystości i osobie, której jest poświęcona.</p>
+        </div>
 
-  <section class="process" id="jak-zamowic">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">Jak zamówić</div>
-        <h2>Prosto i bez zbędnych formalności</h2>
-        <p>Wybierz kompozycję. My zajmiemy się resztą.</p>
-      </div>
+        <div class="offers__grid">
+          <article class="card">
+            <img class="card__image" src="assets/images/card-klasyczne.webp"
+                 alt="Elegancka wiązanka z lilii, róż i gipsówki" width="719" height="605" loading="lazy">
+            <div class="card__body">
+              <h3 class="card__title">Wiązanki klasyczne</h3>
+              <p class="card__text">Stonowane kompozycje z lilii, róż, zieleni i delikatnych kwiatów uzupełniających.</p>
+              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
+            </div>
+          </article>
 
-      <div class="steps">
-        <div class="step"><div class="step-num">01</div><h3>Wybierz</h3><p>Wybierz rodzaj i styl wiązanki.</p></div>
-        <div class="step"><div class="step-num">02</div><h3>Podaj miejsce</h3><p>Wskaż cmentarz i lokalizację grobu.</p></div>
-        <div class="step"><div class="step-num">03</div><h3>Wybierz termin</h3><p>Ustal dogodny dzień realizacji.</p></div>
-        <div class="step"><div class="step-num">04</div><h3>Gotowe</h3><p>Przygotujemy i dostarczymy kompozycję.</p></div>
-      </div>
-    </div>
-  </section>
+          <article class="card">
+            <img class="card__image" src="assets/images/card-premium.webp"
+                 alt="Kompozycja z orchideą i różą" width="634" height="533" loading="lazy">
+            <div class="card__body">
+              <h3 class="card__title">Wiązanki premium</h3>
+              <p class="card__text">Starannie dobrane kwiaty i bardziej rozbudowane kompozycje dla wyjątkowych chwil.</p>
+              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
+            </div>
+          </article>
 
-  <section class="gallery">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">Nasze kompozycje</div>
-        <h2>Naturalne kwiaty.<br>Spokojna forma.</h2>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-big"><img src="assets/hero-wiazanka.png" alt="Wiązanka na grobie"></div>
-        <div class="gallery-side">
-          <div class="gallery-small"><img src="assets/kompozycja-lampion.png" alt="Kompozycja z lampionem"></div>
-          <div class="gallery-small"><img src="assets/kompozycja-orchidea.png" alt="Kompozycja z orchideą"></div>
+          <article class="card">
+            <img class="card__image" src="assets/images/card-uroczystosc.webp"
+                 alt="Wiązanka z lampionem przy nagrobku" width="714" height="600" loading="lazy">
+            <div class="card__body">
+              <h3 class="card__title">Wiązanki na uroczystość</h3>
+              <p class="card__text">Eleganckie kompozycje przygotowane z myślą o ceremonii pożegnania.</p>
+              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="final-cta">
+    <section class="story" id="o-nas" aria-labelledby="story-title">
+      <div class="story__image" role="img" aria-label="Wiązanka z lampionem przy nagrobku"></div>
+      <div class="story__copy">
+        <p class="section-kicker">Bukiet Wspomnień</p>
+        <h2 class="story__title" id="story-title">Piękno, które zostaje w pamięci</h2>
+        <hr class="story__divider">
+        <p class="story__text">
+          Wierzymy, że kwiaty potrafią powiedzieć więcej niż słowa.
+          Dlatego tworzymy wiązanki spokojne, eleganckie i pełne znaczenia.
+          Każda kompozycja jest przygotowywana indywidualnie, z dbałością o najmniejszy szczegół.
+        </p>
+        <div>
+          <button class="btn btn--outline" type="button" data-order-open>Poznaj ofertę →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section process" id="jak-zamowic" aria-labelledby="process-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Jak zamówić</p>
+          <h2 id="process-title">Prosto i bez zbędnych formalności</h2>
+          <p>Wybierz kompozycję. My zajmiemy się resztą.</p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <div class="step__number" aria-hidden="true">01</div>
+            <h3 class="step__title">Wybierz</h3>
+            <p class="step__text">Wybierz rodzaj i styl wiązanki.</p>
+          </li>
+          <li class="step">
+            <div class="step__number" aria-hidden="true">02</div>
+            <h3 class="step__title">Podaj miejsce</h3>
+            <p class="step__text">Wskaż cmentarz i lokalizację grobu.</p>
+          </li>
+          <li class="step">
+            <div class="step__number" aria-hidden="true">03</div>
+            <h3 class="step__title">Wybierz termin</h3>
+            <p class="step__text">Ustal dogodny dzień realizacji.</p>
+          </li>
+          <li class="step">
+            <div class="step__number" aria-hidden="true">04</div>
+            <h3 class="step__title">Gotowe</h3>
+            <p class="step__text">Przygotujemy i dostarczymy kompozycję.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Nasze kompozycje</p>
+          <h2 id="gallery-title">Naturalne kwiaty.<br>Spokojna forma.</h2>
+        </div>
+
+        <div class="gallery__grid">
+          <figure class="gallery__item gallery__item--big">
+            <img src="assets/images/gallery-big.webp" alt="Wiązanka na grobie o zachodzie słońca"
+                 width="940" height="750" loading="lazy">
+          </figure>
+          <div class="gallery__side">
+            <figure class="gallery__item gallery__item--small">
+              <img src="assets/images/gallery-small-1.webp" alt="Białe róże i lilie w kompozycji"
+                   width="674" height="397" loading="lazy">
+            </figure>
+            <figure class="gallery__item gallery__item--small">
+              <img src="assets/images/gallery-small-2.webp" alt="Kompozycja z lampionem"
+                   width="774" height="455" loading="lazy">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="final-cta__copy">
+          <p class="section-kicker">Wiązanki z sercem</p>
+          <h2 class="final-cta__title" id="cta-title">Wyraź pamięć<br>pięknymi kwiatami</h2>
+          <p class="final-cta__text">Wybierz kompozycję i zamów ją z dostawą na wskazane miejsce.</p>
+          <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="kontakt">
     <div class="container">
-      <div class="cta-copy">
-        <div class="section-kicker">Wiązanki z sercem</div>
-        <h2>Wyraź pamięć<br>pięknymi kwiatami</h2>
-        <p>Wybierz kompozycję i zamów ją z dostawą na wskazane miejsce.</p>
-        <button class="btn btn-gold js-order">Zamów wiązankę →</button>
+      <div class="footer__grid">
+        <div>
+          <p class="footer__brand">Bukiet Wspomnień</p>
+          <p>Wiązanki z sercem.</p>
+        </div>
+        <div>
+          <h3 class="footer__title">Oferta</h3>
+          <p><a href="#oferta">Wiązanki klasyczne</a></p>
+          <p><a href="#oferta">Wiązanki premium</a></p>
+        </div>
+        <div>
+          <h3 class="footer__title">Kontakt</h3>
+          <p><a href="tel:+48123456789">+48 123 456 789</a></p>
+          <p><a href="mailto:kontakt@bukietwspomnien.pl">kontakt@bukietwspomnien.pl</a></p>
+        </div>
+        <div>
+          <h3 class="footer__title">Informacje</h3>
+          <p>Dostawa na terenie miasta i okolic</p>
+          <p>Płatność online lub przy zamówieniu</p>
+        </div>
+      </div>
+      <div class="footer__copyright">
+        <p>© 2026 Bukiet Wspomnień. Makieta demonstracyjna.</p>
       </div>
     </div>
-  </section>
-</main>
+  </footer>
 
-<footer id="kontakt">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">Bukiet Wspomnień</div>
-        <p>Wiązanki z sercem.</p>
-      </div>
-      <div><h4>Oferta</h4><p><a href="#oferta">Wiązanki klasyczne</a></p><p><a href="#oferta">Wiązanki premium</a></p></div>
-      <div><h4>Kontakt</h4><p>+48 123 456 789</p><p>kontakt@bukietwspomnien.pl</p></div>
-      <div><h4>Informacje</h4><p>Dostawa na terenie miasta i okolic</p><p>Płatność online lub przy zamówieniu</p></div>
-    </div>
-    <div class="copyright">© 2026 Bukiet Wspomnień. Makieta demonstracyjna.</div>
-  </div>
-</footer>
+  <dialog class="modal" data-order-modal aria-labelledby="order-title">
+    <button class="modal__close" type="button" data-order-close aria-label="Zamknij okno">×</button>
+    <p class="section-kicker">Bukiet Wspomnień</p>
+    <h2 class="modal__title" id="order-title">Zamów wiązankę</h2>
+    <p class="modal__text">
+      To jest demonstracyjny formularz. W docelowej wersji można podłączyć płatności,
+      mapę cmentarzy i obsługę zamówień.
+    </p>
 
-<div class="modal" id="orderModal">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Zamknij">×</button>
-    <div class="section-kicker">Bukiet Wspomnień</div>
-    <h3>Zamów wiązankę</h3>
-    <p>To jest demonstracyjny formularz. W docelowej wersji można podłączyć płatności, mapę cmentarzy i obsługę zamówień.</p>
-    <form id="orderForm">
-      <div class="form-grid">
-        <div class="field"><label>Imię</label><input required type="text" placeholder="Twoje imię"></div>
-        <div class="field"><label>Telefon</label><input required type="tel" placeholder="+48"></div>
-        <div class="field full"><label>Cmentarz / lokalizacja</label><input required type="text" placeholder="Nazwa cmentarza"></div>
-        <div class="field full"><label>Informacja</label><textarea placeholder="Rodzaj wiązanki, termin, dodatkowe informacje..."></textarea></div>
+    <form class="form" data-order-form>
+      <div class="form__grid">
+        <div class="field">
+          <label class="field__label" for="order-name">Imię</label>
+          <input class="field__control" id="order-name" name="name" type="text"
+                 autocomplete="given-name" placeholder="Twoje imię" required>
+        </div>
+        <div class="field">
+          <label class="field__label" for="order-phone">Telefon</label>
+          <input class="field__control" id="order-phone" name="phone" type="tel"
+                 autocomplete="tel" placeholder="+48" required>
+        </div>
+        <div class="field field--full">
+          <label class="field__label" for="order-location">Cmentarz / lokalizacja</label>
+          <input class="field__control" id="order-location" name="location" type="text"
+                 placeholder="Nazwa cmentarza" required>
+        </div>
+        <div class="field field--full">
+          <label class="field__label" for="order-notes">Informacja</label>
+          <textarea class="field__control" id="order-notes" name="notes"
+                    placeholder="Rodzaj wiązanki, termin, dodatkowe informacje..."></textarea>
+        </div>
       </div>
-      <button class="btn btn-gold" type="submit">Wyślij zapytanie →</button>
+      <button class="btn btn--gold btn--block" type="submit">Wyślij zapytanie →</button>
     </form>
-  </div>
-</div>
 
-<script>
-  const nav = document.getElementById('nav');
-  const menuToggle = document.getElementById('menuToggle');
-  const modal = document.getElementById('orderModal');
-  const modalClose = document.getElementById('modalClose');
-
-  menuToggle.addEventListener('click', () => nav.classList.toggle('open'));
-
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => nav.classList.remove('open'));
-  });
-
-  document.querySelectorAll('.js-order').forEach(el => {
-    el.addEventListener('click', e => {
-      e.preventDefault();
-      modal.classList.add('open');
-    });
-  });
-
-  modalClose.addEventListener('click', () => modal.classList.remove('open'));
-
-  modal.addEventListener('click', e => {
-    if(e.target === modal) modal.classList.remove('open');
-  });
-
-  document.getElementById('orderForm').addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Demo: formularz został wysłany. W wersji produkcyjnej dane trafią do systemu zamówień.');
-    modal.classList.remove('open');
-    e.target.reset();
-  });
-</script>
+    <p class="form__success" data-order-success role="status" tabindex="-1" hidden>
+      Dziękujemy! To wersja demonstracyjna, więc dane nie zostały nigdzie wysłane.
+      W wersji produkcyjnej trafią do systemu zamówień.
+    </p>
+  </dialog>
 </body>
 </html>
