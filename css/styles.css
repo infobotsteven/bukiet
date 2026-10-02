@@ -37,6 +37,7 @@
   --color-footer: #34382a;
   --color-menu: rgba(48, 48, 39, 0.96);
   --color-overlay: rgba(20, 20, 16, 0.62);
+  --text-shadow-hero: 0 1px 3px rgba(20, 18, 12, 0.5), 0 2px 18px rgba(20, 18, 12, 0.45);
   --color-line: rgba(63, 68, 48, 0.15);
 
   --shadow-soft: 0 8px 25px rgba(55, 45, 35, 0.05);
@@ -114,6 +115,7 @@ h3 {
 h1 {
   margin: 0 0 25px;
   font-size: clamp(48px, 6vw, 78px);
+  text-shadow: var(--text-shadow-hero);
 }
 
 h2 {
@@ -227,13 +229,15 @@ h2 {
 .nav__links {
   display: flex;
   gap: 32px;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-shadow: var(--text-shadow-hero);
 }
 
 .nav__links a {
-  opacity: 0.94;
+  opacity: 1;
   transition: color var(--transition), opacity var(--transition);
 }
 
@@ -269,15 +273,18 @@ h2 {
   min-height: 730px;
   overflow: hidden;
   background:
-    linear-gradient(
-      90deg,
-      rgba(38, 35, 28, 0.58) 0%,
-      rgba(38, 35, 28, 0.28) 42%,
-      rgba(38, 35, 28, 0.05) 72%
-    ),
+    linear-gradient(180deg, rgba(38, 35, 28, 0.55) 0, rgba(38, 35, 28, 0) 190px),
+    var(--hero-overlay),
     var(--hero-image) center / cover no-repeat;
   color: var(--color-white);
   --hero-image: url("../assets/images/hero-1280.webp");
+  --hero-overlay: linear-gradient(
+    90deg,
+    rgba(38, 35, 28, 0.7) 0%,
+    rgba(38, 35, 28, 0.55) 35%,
+    rgba(38, 35, 28, 0.28) 58%,
+    rgba(38, 35, 28, 0.05) 80%
+  );
 }
 
 .hero::after {
@@ -297,25 +304,29 @@ h2 {
 
 .hero__eyebrow {
   margin: 0 0 18px;
-  color: var(--color-gold-light);
-  font-size: 12px;
+  color: var(--color-gold-pale);
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
+  text-shadow: var(--text-shadow-hero);
 }
 
 .hero__copy {
   max-width: 510px;
   margin: 0 0 32px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-white);
   font-size: 18px;
+  text-shadow: var(--text-shadow-hero);
 }
 
 .hero__note {
   margin: 20px 0 0;
   font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.8;
+  text-shadow: var(--text-shadow-hero);
 }
 
 /* 7. Pasek zalet
@@ -523,40 +534,57 @@ h2 {
   font-size: 14px;
 }
 
+.process__cta {
+  margin-top: 44px;
+  text-align: center;
+}
+
 /* 12. Galeria
    ========================================================================== */
 .gallery {
   background: var(--color-cream);
 }
 
-.gallery__grid {
+.gallery__rows {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 18px;
+  gap: 80px;
 }
 
-.gallery__side {
+.gallery__row {
   display: grid;
-  gap: 18px;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
 }
 
-.gallery__item {
+.gallery__row--reverse .gallery__media {
+  order: 2;
+}
+
+.gallery__media {
   margin: 0;
   overflow: hidden;
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
 }
 
-.gallery__item img {
+.gallery__media img {
   width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
 }
 
-.gallery__item--big img {
-  height: 560px;
+.gallery__title {
+  margin: 0 0 15px;
+  color: var(--color-olive);
+  font-size: clamp(30px, 3vw, 40px);
 }
 
-.gallery__item--small img {
-  height: 271px;
+.gallery__text {
+  max-width: 480px;
+  margin: 0;
+  color: var(--color-muted);
 }
 
 /* 13. CTA końcowe
@@ -776,6 +804,7 @@ textarea.field__control {
 
   .hero {
     --hero-image: url("../assets/images/hero-800.webp");
+    --hero-overlay: linear-gradient(rgba(38, 35, 28, 0.42), rgba(38, 35, 28, 0.42));
     min-height: 720px;
     background-position: 65% center;
   }
@@ -797,8 +826,7 @@ textarea.field__control {
   }
 
   .offers__grid,
-  .story,
-  .gallery__grid {
+  .story {
     grid-template-columns: 1fr;
   }
 
@@ -811,8 +839,17 @@ textarea.field__control {
     grid-template-columns: 1fr 1fr;
   }
 
-  .gallery__item--big img {
-    height: 430px;
+  .gallery__rows {
+    gap: 56px;
+  }
+
+  .gallery__row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .gallery__row--reverse .gallery__media {
+    order: 0;
   }
 }
 
@@ -851,8 +888,7 @@ textarea.field__control {
 
   .steps,
   .footer__grid,
-  .form__grid,
-  .gallery__side {
+  .form__grid {
     grid-template-columns: 1fr;
   }
 
