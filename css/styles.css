@@ -253,6 +253,11 @@ h2 {
   opacity: 1;
 }
 
+/* Przycisk kontaktu w menu mobilnym (na desktopie jest osobny przycisk CTA obok linków). */
+.nav__cta-mobile {
+  display: none;
+}
+
 .nav__toggle {
   display: none;
   padding: 0;
@@ -1151,6 +1156,14 @@ textarea.field__control {
 
   .nav__links {
     display: none;
+  }
+
+  .nav.is-open .nav__cta-mobile {
+    display: block;
+  }
+
+  .nav__cta-mobile .btn {
+    width: 100%;
   }
 
   .nav.is-open .nav__links {

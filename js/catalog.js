@@ -197,9 +197,9 @@
 
       const footer = el("div", "product__footer");
       footer.append(el("span", "product__price", formatPrice(item.price)));
-      const button = el("button", "card__link product__cta", "Zamów →");
+      const button = el("button", "card__link product__cta", "Kontakt →");
       button.type = "button";
-      button.setAttribute("aria-label", `Zamów kompozycję: ${item.name}`);
+      button.setAttribute("aria-label", `Kontakt w sprawie kompozycji: ${item.name}`);
       button.addEventListener("click", () => requestOrder(item));
       footer.append(button);
       body.append(footer);

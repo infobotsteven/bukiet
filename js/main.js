@@ -22,7 +22,7 @@
       setOpen(toggle.getAttribute("aria-expanded") !== "true");
     });
 
-    nav.querySelectorAll(".nav__links a").forEach((link) => {
+    nav.querySelectorAll(".nav__links a, .nav__links button").forEach((link) => {
       link.addEventListener("click", () => setOpen(false));
     });
 
