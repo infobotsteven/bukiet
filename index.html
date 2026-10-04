@@ -39,7 +39,7 @@
         <li><a href="#kontakt">Kontakt</a></li>
       </ul>
 
-      <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+      <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
       <button class="nav__toggle" type="button" data-nav-toggle
               aria-label="Menu" aria-controls="nav-links" aria-expanded="false"></button>
     </nav>
@@ -56,7 +56,7 @@
           Eleganckie wiązanki tworzone z naturalnych kwiatów,
           aby pięknie wyrazić pamięć o bliskiej osobie.
         </p>
-        <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+        <a class="btn btn--gold" href="#kompozycje">Wybierz kompozycję →</a>
         <p class="hero__note">Ręczne wykonanie · świeże kwiaty · kompozycje na zamówienie</p>
       </div>
     </section>
@@ -97,7 +97,6 @@
             <div class="card__body">
               <h3 class="card__title">Wiązanki klasyczne</h3>
               <p class="card__text">Stonowane kompozycje z lilii, róż, zieleni i delikatnych kwiatów uzupełniających.</p>
-              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
             </div>
           </article>
 
@@ -107,7 +106,6 @@
             <div class="card__body">
               <h3 class="card__title">Wiązanki premium</h3>
               <p class="card__text">Starannie dobrane kwiaty i bardziej rozbudowane kompozycje dla wyjątkowych chwil.</p>
-              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
             </div>
           </article>
 
@@ -117,9 +115,12 @@
             <div class="card__body">
               <h3 class="card__title">Wiązanki na uroczystość</h3>
               <p class="card__text">Eleganckie kompozycje przygotowane z myślą o ceremonii pożegnania.</p>
-              <button class="card__link" type="button" data-order-open>Zobacz ofertę →</button>
             </div>
           </article>
+        </div>
+
+        <div class="offers__cta">
+          <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
         </div>
       </div>
     </section>
@@ -160,9 +161,9 @@
           </div>
         </div>
 
-        <div class="catalog__summary">
+        <div class="catalog__summary" data-catalog-summary hidden>
           <p class="catalog__count" role="status" data-catalog-count></p>
-          <button class="catalog__reset is-hidden" type="button" data-catalog-reset>Wyczyść filtry</button>
+          <button class="catalog__reset" type="button" data-catalog-reset disabled>Wyczyść filtry</button>
         </div>
         <div class="catalog__grid" data-catalog-grid aria-busy="true"></div>
         <div class="catalog__message" data-catalog-message hidden></div>

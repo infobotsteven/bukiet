@@ -8,7 +8,8 @@ Strona pobiera dane z internetu (katalog), więc najlepiej uruchomić ją przez 
 ## Funkcje
 
 ### Strona
-- Jednostronicowy układ: hero, pasek zalet, oferta (3 kategorie), „O nas", **katalog gotowych kompozycji**, „Jak zamówić", galeria, CTA i stopka.
+- Jednostronicowy układ: hero, pasek zalet, oferta (3 kategorie z jednym przyciskiem kontaktu pod kartami), „O nas", **katalog gotowych kompozycji**, „Jak zamówić", galeria, CTA i stopka.
+- Przycisk w hero płynnie przewija do katalogu, a przycisk w menu otwiera formularz kontaktowy.
 - W pełni responsywna (telefon, tablet, desktop), z menu mobilnym, linkiem „Przejdź do treści", obsługą `prefers-reduced-motion` i atrybutami ARIA.
 - Lekkie obrazy WebP (całe `assets/` poniżej 1 MB), tło hero w dwóch rozmiarach zależnie od ekranu, ikona strony (favicon SVG/ICO oraz ikona Apple).
 
@@ -21,7 +22,7 @@ Dane są pobierane z zakładki „Katalog" w Arkuszu Google, więc ofertę edytu
 
 ### Formularz kontaktowy (okno)
 Natywny element `<dialog>` w dwóch trybach:
-- **Kontakt** (wszystkie zwykłe przyciski „Zostaw kontakt" i „Zamów wiązankę"): imię, telefon, opcjonalna wiadomość i zgoda na kontakt.
+- **Kontakt** (przycisk „Zostaw kontakt" w menu, jeden pod kartami oferty, w sekcji „Jak zamówić" i CTA na końcu strony): imię, telefon, opcjonalna wiadomość i zgoda na kontakt.
 - **Zamówienie kompozycji** (przycisk „Zamów" na karcie katalogu): to samo okno z widoczną wybraną kompozycją i jej ID. Do zgłoszenia dołączane są osobne pola z ID i nazwą kompozycji, a wiadomość klienta pozostaje nietknięta.
 - Po wysłaniu pokazuje potwierdzenie (zielony box z ikoną), a przy błędzie komunikat bez utraty wpisanych danych. Wysyłka ma limit czasu, a przycisk blokuje się na czas wysyłania.
 

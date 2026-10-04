@@ -157,6 +157,7 @@
     const priceGroup = root.querySelector("[data-catalog-price-group]");
     const priceInput = root.querySelector("[data-catalog-price]");
     const priceOutput = root.querySelector("[data-catalog-price-output]");
+    const summary = root.querySelector("[data-catalog-summary]");
     const resetButton = root.querySelector("[data-catalog-reset]");
     const count = root.querySelector("[data-catalog-count]");
     const grid = root.querySelector("[data-catalog-grid]");
@@ -214,16 +215,16 @@
       );
       message.hidden = true;
       filters.hidden = true;
+      summary.hidden = true;
       count.textContent = "";
-      resetButton.classList.add("is-hidden");
     };
 
     const showMessage = (text, actionLabel, onAction) => {
       grid.replaceChildren();
       grid.removeAttribute("aria-busy");
       filters.hidden = true;
+      summary.hidden = true;
       count.textContent = "";
-      resetButton.classList.add("is-hidden");
       message.replaceChildren(el("p", "catalog__message-text", text));
       if (actionLabel) {
         const action = el("button", "btn btn--outline", actionLabel);
@@ -258,7 +259,8 @@
         message.hidden = false;
       }
       const isFiltered = state.occasion !== "all" || state.maxPrice < state.priceMax;
-      resetButton.classList.toggle("is-hidden", !isFiltered);
+      summary.hidden = false;
+      resetButton.disabled = !isFiltered;
     };
 
     const renderChips = (occasions) => {

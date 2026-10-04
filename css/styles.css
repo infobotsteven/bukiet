@@ -447,6 +447,15 @@ h2 {
   font-size: 14px;
 }
 
+.offers .card__text:last-child {
+  margin-bottom: 0;
+}
+
+.offers__cta {
+  margin-top: 44px;
+  text-align: center;
+}
+
 .card__link {
   padding: 0;
   border: 0;
@@ -467,12 +476,11 @@ h2 {
 
 .catalog__filters {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 22px 40px;
-  max-width: 920px;
-  margin: 0 auto 18px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto 22px;
 }
 
 .catalog__group {
@@ -535,10 +543,6 @@ h2 {
   accent-color: var(--color-gold);
 }
 
-.catalog__reset.is-hidden {
-  visibility: hidden;
-}
-
 .catalog__reset {
   padding: 0 0 2px;
   border: 0;
@@ -551,8 +555,14 @@ h2 {
   cursor: pointer;
 }
 
-/* Licznik i "Wyczyść filtry" w jednej linii. Przycisk zawsze zajmuje miejsce (tylko jest niewidoczny),
-   żeby jego pojawianie się nie przesuwało filtrów ani suwaka. */
+.catalog__reset:disabled {
+  opacity: 0.45;
+  text-decoration: none;
+  cursor: default;
+}
+
+/* Licznik i "Wyczyść filtry" w jednej linii, wyśrodkowane. Przycisk jest widoczny cały czas
+   (przygaszony i nieaktywny, gdy nie ma filtrów), więc nic się nie przesuwa przy zmianie filtrów. */
 .catalog__summary {
   display: flex;
   align-items: baseline;
@@ -560,6 +570,10 @@ h2 {
   gap: 14px;
   min-height: 2em;
   margin: 0 0 24px;
+}
+
+.catalog__summary[hidden] {
+  display: none;
 }
 
 .catalog__count {
@@ -570,10 +584,17 @@ h2 {
   text-align: center;
 }
 
+/* Flex zamiast siatki: niepełny rząd (np. 2 karty po filtrowaniu) jest wyśrodkowany. */
 .catalog__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 22px;
+}
+
+.catalog__grid > .product {
+  flex: 0 1 calc((100% - 44px) / 3);
+  min-width: 0;
 }
 
 .catalog__message {
@@ -1104,14 +1125,14 @@ textarea.field__control {
 }
 
 @media (max-width: 1000px) {
-  .catalog__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .catalog__grid > .product {
+    flex-basis: calc((100% - 22px) / 2);
   }
 }
 
 @media (max-width: 640px) {
-  .catalog__grid {
-    grid-template-columns: 1fr;
+  .catalog__grid > .product {
+    flex-basis: 100%;
   }
 
   .catalog__range {
