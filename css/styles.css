@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Bukiet Wspomnień - landing page
+   Kwiaty z Sercem - landing page
    Spis treści:
    1. Zmienne
    2. Reset i style bazowe
@@ -27,6 +27,7 @@
   --color-cream-dark: #f1e9df;
   --color-paper: #fffdf9;
   --color-white: #fff;
+  --color-logo-bg: #fdfdfb;
   --color-olive: #3f4430;
   --color-gold: #b88a52;
   --color-gold-dark: #a87943;
@@ -217,10 +218,11 @@ h2 {
 }
 
 .brand {
-  width: 150px;
-  padding: 7px 12px 5px;
+  align-self: flex-start;
+  width: 172px;
+  padding: 16px 10px 8px;
   border-radius: 0 0 14px 14px;
-  background: var(--color-white);
+  background: var(--color-logo-bg);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
@@ -280,7 +282,7 @@ h2 {
     var(--hero-overlay),
     var(--hero-image) center / cover no-repeat;
   color: var(--color-white);
-  --hero-image: url("../assets/images/hero-1280.webp");
+  --hero-image: url("../assets/images/hero-1600.webp");
   --hero-overlay: linear-gradient(
     90deg,
     rgba(38, 35, 28, 0.7) 0%,
@@ -650,11 +652,10 @@ h2 {
   gap: 35px;
 }
 
-.site-footer .footer__brand {
-  margin: 0 0 0.3em;
-  color: inherit;
-  font-family: var(--font-serif);
-  font-size: 28px;
+.footer__logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 14px;
 }
 
 .footer__title {
@@ -841,6 +842,12 @@ textarea.field__control {
 
 /* 16. Responsywność
    ========================================================================== */
+@media (min-width: 1201px) {
+  .hero {
+    --hero-image: url("../assets/images/hero-2400.webp");
+  }
+}
+
 @media (max-width: 850px) {
   .nav__toggle {
     display: block;
@@ -868,7 +875,6 @@ textarea.field__control {
   }
 
   .hero {
-    --hero-image: url("../assets/images/hero-800.webp");
     --hero-overlay: linear-gradient(rgba(38, 35, 28, 0.42), rgba(38, 35, 28, 0.42));
     min-height: 720px;
     background-position: 65% center;
@@ -932,7 +938,8 @@ textarea.field__control {
   }
 
   .brand {
-    width: 130px;
+    width: 140px;
+    padding: 12px 8px 6px;
   }
 
   .hero {

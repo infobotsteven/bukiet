@@ -1,4 +1,4 @@
-# Bukiet Wspomnień - landing page
+# Kwiaty z Sercem - landing page
 
 Makieta landing page wykonana w czystym HTML + CSS + JavaScript (bez zależności i bez etapu budowania).
 
