@@ -51,21 +51,53 @@
     const submit = modal.querySelector("[data-order-submit]");
     const title = modal.querySelector("[data-order-title]");
     const lead = modal.querySelector("[data-order-lead]");
+    const notes = form.elements.notes;
+    const productBox = modal.querySelector("[data-order-product]");
+    const productName = modal.querySelector("[data-order-product-name]");
+    const productId = modal.querySelector("[data-order-product-id]");
+    let selectedProduct = null;
     const submitLabel = submit.textContent;
-    const titleLabel = title.textContent;
+
+    // Dwa tryby okna: czysty kontakt (domyślny) i zamówienie kompozycji z katalogu.
+    // Teksty trybu kontaktowego to zawartość HTML, teksty zamówienia siedzą w atrybutach data-*-order.
+    const texts = {
+      contact: {
+        title: title.textContent,
+        lead: lead.textContent.trim(),
+        placeholder: notes.placeholder,
+      },
+      order: {
+        title: title.dataset.textOrder,
+        lead: lead.dataset.textOrder,
+        placeholder: notes.dataset.placeholderOrder,
+      },
+    };
 
     const setSending = (isSending) => {
       submit.disabled = isSending;
       submit.textContent = isSending ? "Wysyłanie…" : submitLabel;
     };
 
+    // Kompozycja wybrana w katalogu (id + nazwa) jest wysyłana osobnymi polami; bez niej okno jest czysto kontaktowe.
+    const setProduct = (product) => {
+      selectedProduct = product && product.id && product.name ? product : null;
+      productBox.hidden = !selectedProduct;
+      productName.textContent = selectedProduct ? selectedProduct.name : "";
+      productId.textContent = selectedProduct ? selectedProduct.id : "";
+
+      const mode = texts[selectedProduct ? "order" : "contact"];
+      title.textContent = mode.title;
+      lead.textContent = mode.lead;
+      notes.placeholder = mode.placeholder;
+    };
+
     const resetForm = () => {
       form.reset();
+      setProduct(null);
       form.hidden = false;
       success.hidden = true;
       error.hidden = true;
       lead.hidden = false;
-      title.textContent = titleLabel;
       setSending(false);
     };
 
@@ -79,21 +111,38 @@
       );
     };
 
+    const buildBody = () => {
+      const body = new URLSearchParams(new FormData(form));
+      if (selectedProduct) {
+        body.set("product_id", selectedProduct.id);
+        body.set("product_name", selectedProduct.name);
+      }
+      return body;
+    };
+
     const sendOrder = async () => {
       const response = await fetch(form.dataset.endpoint, {
         method: "POST",
-        body: new URLSearchParams(new FormData(form)),
+        body: buildBody(),
         signal: AbortSignal.timeout(SUBMIT_TIMEOUT_MS),
       });
       const result = await response.json();
       if (!result.ok) throw new Error("Zgłoszenie odrzucone");
     };
 
+    const openModal = (product) => {
+      resetForm();
+      setProduct(product);
+      modal.showModal();
+    };
+
     document.querySelectorAll("[data-order-open]").forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        resetForm();
-        modal.showModal();
-      });
+      trigger.addEventListener("click", () => openModal(null));
+    });
+
+    // Otwarcie okna z innych modułów (np. z katalogu): detail.product = { id, name }.
+    document.addEventListener("order:open", (event) => {
+      openModal(event.detail && event.detail.product);
     });
 
     modal.querySelectorAll("[data-order-close]").forEach((button) => {
@@ -113,6 +162,7 @@
         await sendOrder();
         form.hidden = true;
         lead.hidden = true;
+        productBox.hidden = true;
         title.textContent = SUCCESS_TITLE;
         success.hidden = false;
         success.focus();

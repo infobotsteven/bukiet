@@ -10,6 +10,7 @@
    7. Pasek zalet
    8. Sekcje (wspólne)
    9. Oferta
+   9a. Katalog (gotowe kompozycje z arkusza)
   10. O nas
   11. Jak zamówić
   12. Galeria
@@ -33,6 +34,7 @@
   --color-gold-dark: #a87943;
   --color-gold-light: #d9b27c;
   --color-gold-pale: #f0d5ae;
+  --color-burgundy: #8c2349;
   --color-text: #302d27;
   --color-muted: #777166;
   --color-footer: #34382a;
@@ -457,6 +459,244 @@ h2 {
   cursor: pointer;
 }
 
+/* 9a. Katalog (gotowe kompozycje z arkusza)
+   ========================================================================== */
+.catalog {
+  background: var(--color-cream);
+}
+
+.catalog__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 22px 40px;
+  max-width: 920px;
+  margin: 0 auto 18px;
+}
+
+.catalog__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Reguły z display przesłaniają atrybut hidden, więc ukrywamy je jawnie. */
+.catalog__filters[hidden],
+.catalog__group[hidden] {
+  display: none;
+}
+
+.catalog__label {
+  color: var(--color-olive);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.catalog__label output {
+  color: var(--color-gold-dark);
+}
+
+.catalog__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chip {
+  padding: 9px 16px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-olive);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.chip:hover {
+  border-color: var(--color-gold);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--color-olive);
+  background: var(--color-olive);
+  color: var(--color-white);
+}
+
+.catalog__range {
+  width: 240px;
+  accent-color: var(--color-gold);
+}
+
+.catalog__reset.is-hidden {
+  visibility: hidden;
+}
+
+.catalog__reset {
+  padding: 0 0 2px;
+  border: 0;
+  background: none;
+  color: var(--color-gold-dark);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Licznik i "Wyczyść filtry" w jednej linii. Przycisk zawsze zajmuje miejsce (tylko jest niewidoczny),
+   żeby jego pojawianie się nie przesuwało filtrów ani suwaka. */
+.catalog__summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  min-height: 2em;
+  margin: 0 0 24px;
+}
+
+.catalog__count {
+  min-width: 200px;                  /* stała szerokość: zmiana tekstu ("1 kompozycja" / "9 kompozycji") nie przesuwa przycisku */
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.catalog__message {
+  padding: 40px 20px;
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-card);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.catalog__message-text {
+  margin: 0 0 18px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+}
+
+.product__media {
+  position: relative;
+}
+
+.product__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product__occasion {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 253, 249, 0.92);
+  color: var(--color-olive);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product__ribbon {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold);
+  box-shadow: 0 6px 16px rgba(120, 84, 38, 0.35);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.product__title {
+  margin: 0 0 9px;
+  color: var(--color-olive);
+  font-size: 26px;
+}
+
+.product__text {
+  display: -webkit-box;
+  margin: 0 0 18px;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 14px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.product__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-line);
+}
+
+.product__price {
+  color: var(--color-olive);
+  font-family: var(--font-serif);
+  font-size: 24px;
+}
+
+/* Wyróżnione: złota ramka, ciepłe tło, wstążka "Polecane", cena w kolorze bordo. */
+.product--featured {
+  border: 2px solid var(--color-gold);
+  background: linear-gradient(180deg, #fff8ea, var(--color-white) 55%);
+  box-shadow: 0 16px 44px rgba(184, 138, 82, 0.28);
+}
+
+.product--featured .product__price {
+  color: var(--color-burgundy);
+}
+
+.product--skeleton {
+  min-height: 430px;
+  border: 0;
+  background: linear-gradient(90deg, #f3ece2 25%, #fbf7f1 50%, #f3ece2 75%);
+  background-size: 200% 100%;
+  box-shadow: none;
+  animation: skeleton-shimmer 1.4s linear infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
 /* 10. O nas
    ========================================================================== */
 .story {
@@ -722,6 +962,21 @@ h2 {
   font-size: 14px;
 }
 
+.modal__product {
+  margin: 0 0 4px;
+  padding: 10px 14px;
+  border-radius: var(--radius-field);
+  background: var(--color-cream);
+  color: var(--color-olive);
+  font-size: 14px;
+}
+
+.modal__product-id {
+  color: var(--color-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
 .form__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -845,6 +1100,22 @@ textarea.field__control {
 @media (min-width: 1201px) {
   .hero {
     --hero-image: url("../assets/images/hero-2400.webp");
+  }
+}
+
+@media (max-width: 1000px) {
+  .catalog__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog__range {
+    width: min(280px, 80vw);
   }
 }
 
