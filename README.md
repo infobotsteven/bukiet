@@ -15,7 +15,7 @@ Strona pobiera dane z internetu (katalog), więc najlepiej uruchomić ją przez 
 
 ### Katalog gotowych kompozycji
 Dane są pobierane z zakładki „Katalog" w Arkuszu Google, więc ofertę edytuje się w arkuszu, bez zmian w kodzie.
-- **Karty** ze zdjęciem, okazją, nazwą, opisem i ceną. Kompozycje bez własnego zdjęcia dostają zdjęcie zastępcze.
+- **Karty** ze zdjęciem, okazją, nazwą, opisem i ceną. Zdjęcie kompozycji to plik z folderu `assets/images/katalog/`, którego nazwa (z rozszerzeniem, np. `2.webp`) jest wpisana w kolumnie `zdjecie` arkusza. Kompozycje bez zdjęcia (lub z nieistniejącym plikiem) dostają zdjęcie zastępcze.
 - **Wyróżnione kompozycje** pojawiają się na początku, ze złotą ramką, wstążką „Polecane" i ceną w kolorze bordo.
 - **Filtry:** okazja (przyciski) oraz maksymalna cena (suwak). Filtry łączą się ze sobą, wskazują liczbę wyników i można je wyczyścić. Okazje o „uniwersalnych" nazwach (np. „Każda okazja") pasują do każdego filtra.
 - **Stany:** szkielet ładowania, komunikat z ponowieniem przy błędzie, informacja o pustym katalogu, brak wyników po filtrach. Krótka pamięć podręczna w przeglądarce przyspiesza kolejne wejścia.
@@ -41,8 +41,14 @@ Natywny element `<dialog>` w dwóch trybach:
 - `css/styles.css` - style (zmienne, komponenty w konwencji BEM, responsywność)
 - `js/main.js` - menu mobilne, okno kontaktowe i wysyłka formularza
 - `js/catalog.js` - katalog: pobieranie, filtry, karty, zamawianie z karty
-- `assets/images/` - logo i zdjęcia w formacie WebP
+- `assets/images/` - logo i zdjęcia strony w formacie WebP
+- `assets/images/katalog/` - zdjęcia kompozycji z katalogu (WebP 1000×750, proporcje 4:3, nazwy zgodne z kolumną `zdjecie` w arkuszu)
 - `assets/icons/` - ikona strony
+
+## Dodawanie zdjęć kompozycji
+1. Przygotuj zdjęcie w proporcjach 4:3 (poziome, min. 1200×900 px, bukiet na środku kadru).
+2. Zapisz je jako WebP 1000×750 (jakość ok. 80, zwykle 60-150 KB) w `assets/images/katalog/`, np. jako `<id kompozycji>.webp`.
+3. Wypchnij zmianę do repozytorium i dopiero wtedy wpisz nazwę pliku (z rozszerzeniem `.webp`) w kolumnie `zdjecie` arkusza.
 
 ## Konfiguracja
 Adres skryptu Google Apps Script jest w atrybucie `data-endpoint` formularza w `index.html` (jedno miejsce; korzysta z niego zarówno wysyłka zgłoszeń, jak i katalog).
