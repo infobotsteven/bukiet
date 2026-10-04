@@ -16,6 +16,7 @@ Strona pobiera dane z internetu (katalog), więc najlepiej uruchomić ją przez 
 ### Katalog gotowych kompozycji
 Dane są pobierane z zakładki „Katalog" w Arkuszu Google, więc ofertę edytuje się w arkuszu, bez zmian w kodzie.
 - **Karty** ze zdjęciem, okazją, nazwą, opisem i ceną. Zdjęcie kompozycji to plik z folderu `assets/images/katalog/`, którego nazwa (z rozszerzeniem, np. `2.webp`) jest wpisana w kolumnie `zdjecie` arkusza. Kompozycje bez zdjęcia (lub z nieistniejącym plikiem) dostają zdjęcie zastępcze.
+- **Powiększenie zdjęcia:** klik (lub dotknięcie, lub Enter na zdjęciu) otwiera większą wersję w oknie z podpisem. Zamyka się krzyżykiem, klawiszem Esc albo kliknięciem w tło.
 - **Wyróżnione kompozycje** pojawiają się na początku, ze złotą ramką, wstążką „Polecane" i ceną w kolorze bordo.
 - **Filtry:** okazja (przyciski) oraz maksymalna cena (suwak). Filtry łączą się ze sobą, wskazują liczbę wyników i można je wyczyścić. Okazje o „uniwersalnych" nazwach (np. „Każda okazja") pasują do każdego filtra.
 - **Stany:** szkielet ładowania, komunikat z ponowieniem przy błędzie, informacja o pustym katalogu, brak wyników po filtrach. Krótka pamięć podręczna w przeglądarce przyspiesza kolejne wejścia.

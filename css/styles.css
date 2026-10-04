@@ -623,6 +623,43 @@ h2 {
   position: relative;
 }
 
+.product__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* Ikona lupy w rogu zdjęcia (pojawia się po najechaniu lub fokusie). */
+.product__zoom::after {
+  content: "⤢";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.92);
+  color: var(--color-olive);
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.product__zoom:hover::after,
+.product__zoom:focus-visible::after {
+  opacity: 1;
+}
+
+.product__occasion,
+.product__ribbon {
+  pointer-events: none;                  /* klik w znaczek otwiera zdjęcie */
+}
+
 .product__image {
   width: 100%;
   height: auto;
@@ -1119,6 +1156,61 @@ textarea.field__control {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* 15a. Powiększone zdjęcie kompozycji (okno)
+   ========================================================================== */
+.lightbox {
+  width: fit-content;
+  max-width: min(94vw, 1040px);
+  max-height: 94vh;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+  color: var(--color-text);
+  box-shadow: var(--shadow-modal);
+}
+
+.lightbox::backdrop {
+  background: rgba(20, 20, 16, 0.78);
+}
+
+.lightbox__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 80vh;                      /* auto + max: obraz nigdy nie jest powiększany ponad swój rozmiar */
+  margin: 0 auto;
+}
+
+.lightbox__caption {
+  margin: 0;
+  padding: 16px 24px 20px;
+  color: var(--color-olive);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  text-align: center;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.92);
+  color: var(--color-olive);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 /* 16. Responsywność

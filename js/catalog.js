@@ -162,8 +162,35 @@
     const count = root.querySelector("[data-catalog-count]");
     const grid = root.querySelector("[data-catalog-grid]");
     const message = root.querySelector("[data-catalog-message]");
+    const lightbox = document.querySelector("[data-lightbox]");
+    const lightboxImage = lightbox && lightbox.querySelector("[data-lightbox-image]");
+    const lightboxCaption = lightbox && lightbox.querySelector("[data-lightbox-caption]");
 
     const state = { items: [], occasion: "all", maxPrice: Infinity, priceMax: 0 };
+
+    // Powiększenie zdjęcia: natywny <dialog> (Esc, pułapka fokusu i przywrócenie fokusu za darmo).
+    const openLightbox = (img, item) => {
+      lightboxImage.src = img.currentSrc || img.src;
+      lightboxImage.alt = img.alt;
+      lightboxCaption.textContent = item.name;
+      lightbox.showModal();
+    };
+
+    const closeLightbox = () => {
+      lightbox.close();
+      lightboxImage.removeAttribute("src");   // nie trzymamy dużego obrazu w DOM po zamknięciu
+    };
+
+    // Zdjęcie karty owinięte w przycisk, żeby dało się je otworzyć myszą, dotykiem i klawiaturą.
+    const createZoomButton = (img, item) => {
+      const button = el("button", "product__zoom");
+      button.type = "button";
+      button.setAttribute("aria-label", `Powiększ zdjęcie: ${item.name}`);
+      button.setAttribute("aria-haspopup", "dialog");
+      button.addEventListener("click", () => openLightbox(img, item));
+      button.append(img);
+      return button;
+    };
 
     const createProduct = (item) => {
       const card = el("article", `card product${item.featured ? " product--featured" : ""}`);
@@ -183,7 +210,7 @@
         },
         { once: true }
       );
-      media.append(img);
+      media.append(lightbox ? createZoomButton(img, item) : img);
       if (item.featured) {
         const ribbon = el("span", "product__ribbon");
         ribbon.append(el("span", "product__ribbon-star", "★"), " Polecane");
@@ -368,6 +395,23 @@
       renderList();
     });
     resetButton.addEventListener("click", resetFilters);
+
+    if (lightbox) {
+      lightbox.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
+      // Klik w tło (poza oknem) zamyka podgląd; klik wewnątrz okna nie.
+      lightbox.addEventListener("click", (event) => {
+        if (event.target !== lightbox) return;
+        const box = lightbox.getBoundingClientRect();
+        const outside =
+          event.clientX < box.left ||
+          event.clientX > box.right ||
+          event.clientY < box.top ||
+          event.clientY > box.bottom;
+        if (outside) closeLightbox();
+      });
+      // Zamknięcie klawiszem Esc nie przechodzi przez closeLightbox, więc sprzątamy też po zdarzeniu close.
+      lightbox.addEventListener("close", () => lightboxImage.removeAttribute("src"));
+    }
 
     load();
   };
