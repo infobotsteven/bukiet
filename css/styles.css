@@ -977,6 +977,11 @@ h2 {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.site-footer .footer__copyright a {
+  font-size: inherit;
+  text-decoration: underline;
+}
+
 .site-footer .footer__copyright p {
   margin: 0;
   color: rgba(255, 255, 255, 0.45);
@@ -1081,6 +1086,11 @@ h2 {
 textarea.field__control {
   min-height: 90px;
   resize: vertical;
+}
+
+.consent a {
+  color: var(--color-gold-dark);
+  text-decoration: underline;
 }
 
 .field--trap {
@@ -1211,6 +1221,91 @@ textarea.field__control {
   font-size: 26px;
   line-height: 1;
   cursor: pointer;
+}
+
+/* 15b. Strona polityki prywatności
+   ========================================================================== */
+.legal-header {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+
+.legal-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.legal-header__logo {
+  display: block;
+  width: 64px;
+  height: auto;
+}
+
+.legal-header__back {
+  color: var(--color-gold-dark);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legal {
+  max-width: 780px;
+  padding: 56px 0 90px;
+}
+
+.legal h1 {
+  margin: 0 0 8px;
+  color: var(--color-olive);
+  font-size: clamp(34px, 4.5vw, 48px);
+  text-shadow: none;                     /* globalny cień nagłówka h1 jest przeznaczony dla hero */
+}
+
+.legal__meta {
+  margin: 0 0 36px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.legal h2 {
+  margin: 42px 0 12px;
+  color: var(--color-olive);
+  font-size: 26px;
+}
+
+.legal p,
+.legal li {
+  margin: 0 0 12px;
+}
+
+.legal ul {
+  margin: 0 0 14px;
+  padding-left: 22px;
+  list-style: disc;
+}
+
+.legal a {
+  color: var(--color-gold-dark);
+  text-decoration: underline;
+}
+
+.legal-footer {
+  padding: 24px 0;
+  background: var(--color-footer);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  text-align: center;
+}
+
+.legal-footer p {
+  margin: 0;
+}
+
+.legal-footer a {
+  color: var(--color-gold-light);
+  text-decoration: underline;
 }
 
 /* 16. Responsywność
