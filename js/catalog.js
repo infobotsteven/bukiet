@@ -1,11 +1,14 @@
 (() => {
   "use strict";
 
+  const { fetchJson, isClickOutside } = window.KzS;
+
   const CACHE_KEY = "kzs:catalog:v1";
   const CACHE_TTL_MS = 5 * 60 * 1000;
   const FETCH_TIMEOUT_MS = 15000;
   const SKELETON_COUNT = 3;
   const PRICE_STEP = 50;
+  const PRODUCT_IMAGE_SIZE = { width: 640, height: 480 };   // proporcje 4:3 jak w CSS (zapobiega skokom układu)
 
   const IMAGE_DIR = "assets/images/katalog/";
   const PLACEHOLDERS = [
@@ -32,16 +35,16 @@
       .toLowerCase()
       .replace(/ł/g, "l")
       .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
+      .replace(/[\u0300-\u036f]/g, "")
       .trim();
 
   const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
   // Pierwsza liczba z tekstu ceny ("1 000,50 zł" -> 1000.5, "od 120 zł" -> 120). Brak liczby -> null.
   const parsePrice = (text) => {
-    const match = String(text || "").match(/\d[\d\s ]*(?:[.,]\d+)?/);
+    const match = String(text || "").match(/\d[\d\s\u00a0]*(?:[.,]\d+)?/);
     if (!match) return null;
-    const value = Number(match[0].replace(/[\s ]/g, "").replace(",", "."));
+    const value = Number(match[0].replace(/[\s\u00a0]/g, "").replace(",", "."));
     return Number.isFinite(value) ? value : null;
   };
 
@@ -49,8 +52,8 @@
   const formatPrice = (text) => {
     const value = String(text || "").trim();
     if (!value) return "Cena do ustalenia";
-    if (!/^\d{1,3}(?:[\s ]\d{3})+(?:[.,]\d+)?$|^\d+(?:[.,]\d+)?$/.test(value)) return value;
-    const number = Number(value.replace(/[\s ]/g, "").replace(",", "."));
+    if (!/^\d{1,3}(?:[\s\u00a0]\d{3})+(?:[.,]\d+)?$|^\d+(?:[.,]\d+)?$/.test(value)) return value;
+    const number = Number(value.replace(/[\s\u00a0]/g, "").replace(",", "."));
     const hasDecimals = /[.,]\d/.test(value);
     const options = hasDecimals ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : {};
     return `${number.toLocaleString("pl-PL", options)} zł`;
@@ -113,10 +116,7 @@
   };
 
   const fetchCatalog = async () => {
-    const response = await fetch(`${getEndpoint()}?action=catalog`, {
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    });
-    const result = await response.json();
+    const result = await fetchJson(`${getEndpoint()}?action=catalog`, {}, FETCH_TIMEOUT_MS);
     if (!result.ok || !Array.isArray(result.items)) throw new Error("Nieprawidłowa odpowiedź katalogu");
     return result.items;
   };
@@ -200,8 +200,8 @@
       const img = el("img", "product__image");
       img.src = image.src;
       img.alt = image.isPlaceholder ? `${item.name} (zdjęcie poglądowe)` : item.name;
-      img.width = 640;
-      img.height = 480;
+      img.width = PRODUCT_IMAGE_SIZE.width;
+      img.height = PRODUCT_IMAGE_SIZE.height;
       img.loading = "lazy";
       img.addEventListener(
         "error",
@@ -246,12 +246,8 @@
       count.textContent = "";
     };
 
-    const showMessage = (text, actionLabel, onAction) => {
-      grid.replaceChildren();
-      grid.removeAttribute("aria-busy");
-      filters.hidden = true;
-      summary.hidden = true;
-      count.textContent = "";
+    // Komunikat w miejscu listy: tekst i opcjonalny przycisk akcji.
+    const setMessage = (text, actionLabel, onAction) => {
       message.replaceChildren(el("p", "catalog__message-text", text));
       if (actionLabel) {
         const action = el("button", "btn btn--outline", actionLabel);
@@ -260,6 +256,16 @@
         message.append(action);
       }
       message.hidden = false;
+    };
+
+    // Komunikat zamiast całego katalogu (błąd, pusty katalog): chowa filtry i licznik.
+    const showMessage = (text, actionLabel, onAction) => {
+      grid.replaceChildren();
+      grid.removeAttribute("aria-busy");
+      filters.hidden = true;
+      summary.hidden = true;
+      count.textContent = "";
+      setMessage(text, actionLabel, onAction);
     };
 
     const matches = (item) => {
@@ -275,16 +281,7 @@
       message.hidden = true;
       grid.replaceChildren(...visible.map(createProduct));
       count.textContent = `Znaleziono: ${visible.length} ${pluralize(visible.length)}`;
-      if (visible.length === 0) {
-        message.replaceChildren(
-          el("p", "catalog__message-text", "Brak kompozycji dla wybranych filtrów.")
-        );
-        const action = el("button", "btn btn--outline", "Wyczyść filtry");
-        action.type = "button";
-        action.addEventListener("click", resetFilters);
-        message.append(action);
-        message.hidden = false;
-      }
+      if (visible.length === 0) setMessage("Brak kompozycji dla wybranych filtrów.", "Wyczyść filtry", resetFilters);
       const isFiltered = state.occasion !== "all" || state.maxPrice < state.priceMax;
       summary.hidden = false;
       resetButton.disabled = !isFiltered;
@@ -316,7 +313,7 @@
         state.maxPrice >= state.priceMax ? "dowolna" : `${state.maxPrice.toLocaleString("pl-PL")} zł`;
     };
 
-    function resetFilters() {
+    const resetFilters = () => {
       state.occasion = "all";
       state.maxPrice = state.priceMax;
       priceInput.value = String(state.priceMax);
@@ -325,7 +322,7 @@
       );
       updatePriceLabel();
       renderList();
-    }
+    };
 
     const setupFilters = () => {
       // Okazje: grupujemy bez względu na wielkość liter i ogonki; etykieta z wariantu z polskimi znakami, jeśli jest.
@@ -400,14 +397,7 @@
       lightbox.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
       // Klik w tło (poza oknem) zamyka podgląd; klik wewnątrz okna nie.
       lightbox.addEventListener("click", (event) => {
-        if (event.target !== lightbox) return;
-        const box = lightbox.getBoundingClientRect();
-        const outside =
-          event.clientX < box.left ||
-          event.clientX > box.right ||
-          event.clientY < box.top ||
-          event.clientY > box.bottom;
-        if (outside) closeLightbox();
+        if (event.target === lightbox && isClickOutside(event, lightbox)) closeLightbox();
       });
       // Zamknięcie klawiszem Esc nie przechodzi przez closeLightbox, więc sprzątamy też po zdarzeniu close.
       lightbox.addEventListener("close", () => lightboxImage.removeAttribute("src"));

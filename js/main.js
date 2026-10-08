@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  const { fetchJson, isClickOutside } = window.KzS;
+
   const MOBILE_MENU_BREAKPOINT = 850;
   const SUBMIT_TIMEOUT_MS = 15000;
   const SUCCESS_TITLE = "Dziękujemy za kontakt!";
@@ -101,16 +103,6 @@
       setSending(false);
     };
 
-    const isClickOutside = (event) => {
-      const box = modal.getBoundingClientRect();
-      return (
-        event.clientX < box.left ||
-        event.clientX > box.right ||
-        event.clientY < box.top ||
-        event.clientY > box.bottom
-      );
-    };
-
     const buildBody = () => {
       const body = new URLSearchParams(new FormData(form));
       if (selectedProduct) {
@@ -121,12 +113,11 @@
     };
 
     const sendOrder = async () => {
-      const response = await fetch(form.dataset.endpoint, {
-        method: "POST",
-        body: buildBody(),
-        signal: AbortSignal.timeout(SUBMIT_TIMEOUT_MS),
-      });
-      const result = await response.json();
+      const result = await fetchJson(
+        form.dataset.endpoint,
+        { method: "POST", body: buildBody() },
+        SUBMIT_TIMEOUT_MS
+      );
       if (!result.ok) throw new Error("Zgłoszenie odrzucone");
     };
 
@@ -150,7 +141,7 @@
     });
 
     modal.addEventListener("click", (event) => {
-      if (event.target === modal && isClickOutside(event)) modal.close();
+      if (event.target === modal && isClickOutside(event, modal)) modal.close();
     });
 
     form.addEventListener("submit", async (event) => {

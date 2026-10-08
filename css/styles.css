@@ -17,6 +17,8 @@
   13. CTA końcowe
   14. Stopka
   15. Okno zamówienia i formularz
+  15a. Powiększone zdjęcie kompozycji (okno)
+  15b. Strona polityki prywatności
   16. Responsywność
   17. Preferencje użytkownika
    ========================================================================== */
@@ -36,19 +38,22 @@
   --color-gold-pale: #f0d5ae;
   --color-burgundy: #8c2349;
   --color-text: #302d27;
-  --color-muted: #777166;
+  --color-muted: #6f6a5f;
   --color-footer: #34382a;
   --color-menu: rgba(48, 48, 39, 0.96);
   --color-overlay: rgba(20, 20, 16, 0.62);
+  --color-overlay-strong: rgba(20, 20, 16, 0.78);
+  --color-paper-glass: rgba(255, 253, 249, 0.92);
+  --color-error: #9b2c2c;
+  --color-line: rgba(63, 68, 48, 0.15);
   --color-success: #2e7d4f;
   --color-success-bg: #eef7f1;
   --color-success-text: #1f5a37;
-  --text-shadow-hero: 0 1px 3px rgba(20, 18, 12, 0.5), 0 2px 18px rgba(20, 18, 12, 0.45);
-  --color-line: rgba(63, 68, 48, 0.15);
 
   --shadow-soft: 0 8px 25px rgba(55, 45, 35, 0.05);
   --shadow-card: 0 20px 55px rgba(62, 52, 39, 0.12);
   --shadow-modal: 0 30px 80px rgba(0, 0, 0, 0.25);
+  --text-shadow-hero: 0 1px 3px rgba(20, 18, 12, 0.5), 0 2px 18px rgba(20, 18, 12, 0.45);
 
   --font-serif: Georgia, "Times New Roman", serif;
   --font-sans: Arial, Helvetica, sans-serif;
@@ -60,6 +65,7 @@
   --container-width: 1180px;
   --container-gutter: 40px;
   --transition: 0.2s ease;
+  --catalog-gap: 22px;
 }
 
 /* 2. Reset i style bazowe
@@ -116,12 +122,6 @@ h3 {
   font-family: var(--font-serif);
   font-weight: 400;
   line-height: 1.08;
-}
-
-h1 {
-  margin: 0 0 25px;
-  font-size: clamp(48px, 6vw, 78px);
-  text-shadow: var(--text-shadow-hero);
 }
 
 h2 {
@@ -200,6 +200,12 @@ h2 {
   width: 100%;
 }
 
+.btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+
 /* 5. Nagłówek i nawigacja
    ========================================================================== */
 .site-header {
@@ -244,13 +250,11 @@ h2 {
 }
 
 .nav__links a {
-  opacity: 1;
-  transition: color var(--transition), opacity var(--transition);
+  transition: color var(--transition);
 }
 
 .nav__links a:hover {
   color: var(--color-gold-pale);
-  opacity: 1;
 }
 
 /* Przycisk kontaktu w menu mobilnym (na desktopie jest osobny przycisk CTA obok linków). */
@@ -279,6 +283,14 @@ h2 {
 /* 6. Hero
    ========================================================================== */
 .hero {
+  --hero-image: url("../assets/images/hero-1600.webp");
+  --hero-overlay: linear-gradient(
+    90deg,
+    rgba(38, 35, 28, 0.7) 0%,
+    rgba(38, 35, 28, 0.55) 35%,
+    rgba(38, 35, 28, 0.28) 58%,
+    rgba(38, 35, 28, 0.05) 80%
+  );
   position: relative;
   display: flex;
   align-items: center;
@@ -289,14 +301,6 @@ h2 {
     var(--hero-overlay),
     var(--hero-image) center / cover no-repeat;
   color: var(--color-white);
-  --hero-image: url("../assets/images/hero-1600.webp");
-  --hero-overlay: linear-gradient(
-    90deg,
-    rgba(38, 35, 28, 0.7) 0%,
-    rgba(38, 35, 28, 0.55) 35%,
-    rgba(38, 35, 28, 0.28) 58%,
-    rgba(38, 35, 28, 0.05) 80%
-  );
 }
 
 .hero::after {
@@ -312,6 +316,12 @@ h2 {
   z-index: 2;
   max-width: 610px;
   padding-top: 85px;
+}
+
+.hero__title {
+  margin: 0 0 25px;
+  font-size: clamp(48px, 6vw, 78px);
+  text-shadow: var(--text-shadow-hero);
 }
 
 .hero__eyebrow {
@@ -404,6 +414,12 @@ h2 {
   text-transform: uppercase;
 }
 
+/* Przycisk pod treścią sekcji (oferta, jak zamówić). */
+.section__cta {
+  margin-top: 44px;
+  text-align: center;
+}
+
 /* 9. Oferta
    ========================================================================== */
 .offers {
@@ -454,11 +470,6 @@ h2 {
 
 .offers .card__text:last-child {
   margin-bottom: 0;
-}
-
-.offers__cta {
-  margin-top: 44px;
-  text-align: center;
 }
 
 .card__link {
@@ -594,11 +605,11 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 22px;
+  gap: var(--catalog-gap);
 }
 
 .catalog__grid > .product {
-  flex: 0 1 calc((100% - 44px) / 3);
+  flex: 0 1 calc((100% - 2 * var(--catalog-gap)) / 3);
   min-width: 0;
 }
 
@@ -643,7 +654,7 @@ h2 {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(255, 253, 249, 0.92);
+  background: var(--color-paper-glass);
   color: var(--color-olive);
   font-size: 18px;
   opacity: 0;
@@ -673,7 +684,7 @@ h2 {
   left: 14px;
   padding: 6px 12px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 253, 249, 0.92);
+  background: var(--color-paper-glass);
   color: var(--color-olive);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -842,11 +853,6 @@ h2 {
   font-size: 14px;
 }
 
-.process__cta {
-  margin-top: 44px;
-  text-align: center;
-}
-
 /* 12. Galeria
    ========================================================================== */
 .gallery {
@@ -984,7 +990,7 @@ h2 {
 
 .site-footer .footer__copyright p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 11px;
 }
 
@@ -1088,11 +1094,6 @@ textarea.field__control {
   resize: vertical;
 }
 
-.consent a {
-  color: var(--color-gold-dark);
-  text-decoration: underline;
-}
-
 .field--trap {
   position: absolute;
   left: -9999px;
@@ -1117,16 +1118,15 @@ textarea.field__control {
   accent-color: var(--color-gold);
 }
 
-.form__error {
-  margin: 16px 0 0;
-  color: #9b2c2c;
-  font-size: 14px;
+.consent a {
+  color: var(--color-gold-dark);
+  text-decoration: underline;
 }
 
-.btn:disabled {
-  opacity: 0.65;
-  cursor: wait;
-  transform: none;
+.form__error {
+  margin: 16px 0 0;
+  color: var(--color-error);
+  font-size: 14px;
 }
 
 .form .btn {
@@ -1184,7 +1184,7 @@ textarea.field__control {
 }
 
 .lightbox::backdrop {
-  background: rgba(20, 20, 16, 0.78);
+  background: var(--color-overlay-strong);
 }
 
 .lightbox__image {
@@ -1216,7 +1216,7 @@ textarea.field__control {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 253, 249, 0.92);
+  background: var(--color-paper-glass);
   color: var(--color-olive);
   font-size: 26px;
   line-height: 1;
@@ -1266,7 +1266,6 @@ textarea.field__control {
   margin: 0 0 8px;
   color: var(--color-olive);
   font-size: clamp(34px, 4.5vw, 48px);
-  text-shadow: none;                     /* globalny cień nagłówka h1 jest przeznaczony dla hero */
 }
 
 .legal__meta {
@@ -1324,17 +1323,7 @@ textarea.field__control {
 
 @media (max-width: 1000px) {
   .catalog__grid > .product {
-    flex-basis: calc((100% - 22px) / 2);
-  }
-}
-
-@media (max-width: 640px) {
-  .catalog__grid > .product {
-    flex-basis: 100%;
-  }
-
-  .catalog__range {
-    width: min(280px, 80vw);
+    flex-basis: calc((100% - var(--catalog-gap)) / 2);
   }
 }
 
@@ -1422,6 +1411,16 @@ textarea.field__control {
   }
 }
 
+@media (max-width: 640px) {
+  .catalog__grid > .product {
+    flex-basis: 100%;
+  }
+
+  .catalog__range {
+    width: min(280px, 80vw);
+  }
+}
+
 @media (max-width: 520px) {
   .container {
     width: min(var(--container-width), calc(100% - 28px));
@@ -1444,7 +1443,7 @@ textarea.field__control {
     min-height: 680px;
   }
 
-  h1 {
+  .hero__title {
     font-size: 46px;
   }
 

@@ -14,11 +14,12 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pl_PL">
   <meta property="og:title" content="Kwiaty z Sercem | Pracownia Florystyczna">
-  <meta property="og:description" content="Eleganckie wiązanki z naturalnych kwiatów, przygotowywane z dbałością o każdy detal.">
+  <meta property="og:description" content="Eleganckie kompozycje kwiatowe, przygotowywane z dbałością o każdy detal.">
 
   <link rel="preload" as="image" href="assets/images/hero-1600.webp" media="(max-width: 1200px)">
   <link rel="preload" as="image" href="assets/images/hero-2400.webp" media="(min-width: 1201px)">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="js/utils.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/catalog.js" defer></script>
 </head>
@@ -53,9 +54,9 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__content">
         <p class="hero__eyebrow">Kwiaty z Sercem</p>
-        <h1 id="hero-title">Z szacunkiem<br>i dbałością<br>o każdy detal</h1>
+        <h1 class="hero__title" id="hero-title">Z szacunkiem<br>i dbałością<br>o każdy detal</h1>
         <p class="hero__copy">
-          Eleganckie wiązanki tworzone z naturalnych kwiatów,
+          Eleganckie kompozycje kwiatowe tworzone po to,
           aby pięknie wyrazić pamięć o bliskiej osobie.
         </p>
         <a class="btn btn--gold" href="#kompozycje">Wybierz kompozycję →</a>
@@ -121,7 +122,7 @@
           </article>
         </div>
 
-        <div class="offers__cta">
+        <div class="section__cta">
           <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
         </div>
       </div>
@@ -204,7 +205,7 @@
           </li>
         </ol>
 
-        <div class="process__cta">
+        <div class="section__cta">
           <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
         </div>
       </div>
@@ -214,7 +215,7 @@
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">Nasze kompozycje</p>
-          <h2 id="gallery-title">Naturalne kwiaty.<br>Spokojna forma.</h2>
+          <h2 id="gallery-title">Piękne kwiaty.<br>Spokojna forma.</h2>
           <p>Każda kompozycja jest dla nas czymś więcej niż wiązanką. To gest pamięci, który mówi to, na co brakuje słów.</p>
         </div>
 
@@ -224,7 +225,7 @@
               <img src="assets/images/gallery-big.webp" alt="Wiązanka na grobie o zachodzie słońca"
                    width="940" height="750" loading="lazy">
             </figure>
-            <div class="gallery__copy">
+            <div>
               <p class="section-kicker">Nasze podejście</p>
               <h3 class="gallery__title">Więcej niż wiązanka</h3>
               <p class="gallery__text">
@@ -240,13 +241,13 @@
               <img src="assets/images/gallery-small-2.webp" alt="Kompozycja z lampionem"
                    width="774" height="455" loading="lazy">
             </figure>
-            <div class="gallery__copy">
+            <div>
               <p class="section-kicker">Dbałość o detal</p>
               <h3 class="gallery__title">Każdy element ma znaczenie</h3>
               <p class="gallery__text">
                 Dobór kwiatów, kolorów i formy dopasowujemy do charakteru uroczystości
-                i osoby, o której pamiętamy. Stawiamy na naturalne kwiaty
-                i spokojną, elegancką kompozycję, bez przesady i bez pośpiechu.
+                i osoby, o której pamiętamy. Stawiamy na spokojną, elegancką
+                kompozycję, bez przesady i bez pośpiechu.
               </p>
             </div>
           </article>
@@ -256,7 +257,7 @@
               <img src="assets/images/gallery-small-1.webp" alt="Białe róże i lilie w kompozycji"
                    width="674" height="396" loading="lazy">
             </figure>
-            <div class="gallery__copy">
+            <div>
               <p class="section-kicker">Spokój po Twojej stronie</p>
               <h3 class="gallery__title">Z uwagą i taktem</h3>
               <p class="gallery__text">
