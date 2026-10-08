@@ -1234,21 +1234,27 @@ textarea.field__control {
 .legal-header__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: center;
 }
 
 .legal-header__logo {
   display: block;
-  width: 64px;
+  width: 130px;
   height: auto;
 }
 
-.legal-header__back {
+.legal__back {
+  display: inline-block;
+  margin-bottom: 28px;
   color: var(--color-gold-dark);
   font-size: 13px;
   letter-spacing: 0.1em;
+  text-decoration: none;
   text-transform: uppercase;
+}
+
+.legal__back:hover {
+  text-decoration: underline;
 }
 
 .legal {
