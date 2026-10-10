@@ -257,6 +257,12 @@
       return card;
     };
 
+    // Linia z licznikiem i "Wyczyść filtry" jest ukryta, gdy zamiast listy jest szkielet lub komunikat.
+    const hideSummary = () => {
+      summary.hidden = true;
+      count.textContent = "";
+    };
+
     const showSkeleton = () => {
       grid.setAttribute("aria-busy", "true");
       grid.replaceChildren(
@@ -265,8 +271,7 @@
       message.hidden = true;
       notice.hidden = true;
       filters.hidden = true;
-      summary.hidden = true;
-      count.textContent = "";
+      hideSummary();
     };
 
     // Komunikat w miejscu listy: tekst i opcjonalny przycisk akcji.
@@ -287,8 +292,7 @@
       grid.removeAttribute("aria-busy");
       notice.hidden = true;
       filters.hidden = true;
-      summary.hidden = true;
-      count.textContent = "";
+      hideSummary();
       setMessage(text, actionLabel, onAction);
     };
 
@@ -361,8 +365,7 @@
       grid.replaceChildren();
       grid.removeAttribute("aria-busy");
       message.hidden = true;
-      summary.hidden = true;
-      count.textContent = "";
+      hideSummary();
       chips.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", "false"));
 
       const showAll = el("button", "btn btn--gold", "Wyświetl wszystkie");

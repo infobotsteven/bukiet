@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
   <title>Kwiaty z Sercem | Pracownia Florystyczna</title>
   <meta name="description" content="Kwiaty z Sercem - pracownia florystyczna. Eleganckie kompozycje kwiatowe na zamówienie, przygotowywane z dbałością o każdy detal.">
   <meta name="theme-color" content="#f8f3ec">
@@ -16,6 +17,8 @@
   <meta property="og:title" content="Kwiaty z Sercem | Pracownia Florystyczna">
   <meta property="og:description" content="Eleganckie kompozycje kwiatowe, przygotowywane z dbałością o każdy detal.">
 
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link rel="preload" as="image" href="assets/images/hero-1600.webp" media="(max-width: 1200px)">
   <link rel="preload" as="image" href="assets/images/hero-2400.webp" media="(min-width: 1201px)">
   <link rel="stylesheet" href="css/styles.css">
@@ -358,7 +361,7 @@
           <label class="field__label" for="order-email">E-mail</label>
           <input class="field__control" id="order-email" name="email" type="email"
                  autocomplete="email" inputmode="email" placeholder="Adres e-mail (opcjonalnie)" maxlength="100"
-                 pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" title="Podaj poprawny adres e-mail">
+                 pattern="[\w.+%'\-]+@[\w\-]+(?:\.[\w\-]+)*\.[A-Za-z]{2,}" title="Podaj poprawny adres e-mail">
         </div>
         <div class="field field--full">
           <label class="field__label" for="order-notes">Informacja</label>
