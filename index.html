@@ -355,6 +355,12 @@
                  pattern="[0-9+\s\(\)\-]{7,}" title="Podaj poprawny numer telefonu" required>
         </div>
         <div class="field field--full">
+          <label class="field__label" for="order-email">E-mail</label>
+          <input class="field__control" id="order-email" name="email" type="email"
+                 autocomplete="email" inputmode="email" placeholder="Adres e-mail (opcjonalnie)" maxlength="100"
+                 pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" title="Podaj poprawny adres e-mail">
+        </div>
+        <div class="field field--full">
           <label class="field__label" for="order-notes">Informacja</label>
           <textarea class="field__control" id="order-notes" name="notes" maxlength="1000"
                     placeholder="W czym możemy pomóc? (opcjonalnie)"
@@ -369,7 +375,7 @@
         <div class="field field--full">
           <label class="consent">
             <input type="checkbox" name="consent" required>
-            <span>Wyrażam zgodę na kontakt telefoniczny w sprawie mojego zapytania.
+            <span>Wyrażam zgodę na kontakt telefoniczny lub e-mailowy w sprawie mojego zapytania.
               Zapoznałem(-am) się z <a href="polityka-prywatnosci" target="_blank" rel="noopener">Polityką prywatności</a>.</span>
           </label>
         </div>
