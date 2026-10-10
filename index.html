@@ -90,40 +90,49 @@
         <div class="section-head">
           <p class="section-kicker">Nasza oferta</p>
           <h2 id="offers-title">Wybierz kompozycję<br>pełną znaczenia</h2>
-          <p>Każdą wiązankę przygotowujemy z myślą o charakterze uroczystości i osobie, której jest poświęcona.</p>
+          <p>Każdą kompozycję tworzymy z dbałością o detale, dobierając kwiaty i dodatki do charakteru uroczystości oraz indywidualnych oczekiwań. Możliwy jest dobór kolorystyki, wymiana kwiatów i dodatków oraz dostosowanie wielkości kompozycji do potrzeb. Kompozycje na indywidualne zamówienie oraz dodatkowe modyfikacje wyceniamy indywidualnie.</p>
         </div>
 
         <div class="offers__grid">
           <article class="card">
-            <img class="card__image" src="assets/images/card-klasyczne.webp"
-                 alt="Elegancka wiązanka z lilii, róż i gipsówki" width="719" height="605" loading="lazy">
+            <img class="card__image" src="assets/images/card-stroiki.webp"
+                 alt="Stroik z różami, szyszkami i lampionem w wiklinowym koszu" width="720" height="540" loading="lazy">
             <div class="card__body">
-              <h3 class="card__title">Wiązanki klasyczne</h3>
-              <p class="card__text">Stonowane kompozycje z lilii, róż, zieleni i delikatnych kwiatów uzupełniających.</p>
+              <h3 class="card__title">Stroiki na groby</h3>
+              <p class="card__text">Ozdobne stroiki przygotowane na groby, w różnych formach i kolorystyce.</p>
+              <a class="btn btn--outline btn--block" href="#kompozycje" data-catalog-category="Stroiki na groby" aria-label="Poznaj ofertę: Stroiki na groby">Poznaj ofertę →</a>
             </div>
           </article>
 
           <article class="card">
-            <img class="card__image" src="assets/images/card-premium.webp"
-                 alt="Kompozycja z orchideą i różą" width="634" height="533" loading="lazy">
+            <img class="card__image" src="assets/images/card-fantazyjne.webp"
+                 alt="Kompozycja z wrzosem i różowymi kwiatami w drewnianej skrzynce" width="720" height="540" loading="lazy">
             <div class="card__body">
-              <h3 class="card__title">Wiązanki premium</h3>
-              <p class="card__text">Starannie dobrane kwiaty i bardziej rozbudowane kompozycje dla wyjątkowych chwil.</p>
+              <h3 class="card__title">Kompozycje fantazyjne</h3>
+              <p class="card__text">Kompozycje o swobodnej, nietypowej formie, tworzone według indywidualnych pomysłów.</p>
+              <a class="btn btn--outline btn--block" href="#kompozycje" data-catalog-category="Kompozycje fantazyjne" aria-label="Poznaj ofertę: Kompozycje fantazyjne">Poznaj ofertę →</a>
             </div>
           </article>
 
           <article class="card">
-            <img class="card__image" src="assets/images/card-uroczystosc.webp"
-                 alt="Wiązanka z lampionem przy nagrobku" width="714" height="600" loading="lazy">
+            <img class="card__image" src="assets/images/card-wiazanki.webp"
+                 alt="Elegancka wiązanka z lilii, róż i gipsówki" width="720" height="540" loading="lazy">
             <div class="card__body">
-              <h3 class="card__title">Wiązanki na uroczystość</h3>
-              <p class="card__text">Eleganckie kompozycje przygotowane z myślą o ceremonii pożegnania.</p>
+              <h3 class="card__title">Wiązanki</h3>
+              <p class="card__text">Tradycyjne wiązanki z kwiatów i zieleni, składane na ceremonie i uroczystości.</p>
+              <a class="btn btn--outline btn--block" href="#kompozycje" data-catalog-category="Wiązanki" aria-label="Poznaj ofertę: Wiązanki">Poznaj ofertę →</a>
             </div>
           </article>
-        </div>
 
-        <div class="section__cta">
-          <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
+          <article class="card">
+            <img class="card__image" src="assets/images/card-wianki.webp"
+                 alt="Okrągła kompozycja z róż i zieleni w koszu" width="720" height="540" loading="lazy">
+            <div class="card__body">
+              <h3 class="card__title">Wianki na groby</h3>
+              <p class="card__text">Okrągłe wianki z kwiatów i dodatków, przygotowywane na groby.</p>
+              <a class="btn btn--outline btn--block" href="#kompozycje" data-catalog-category="Wianki na groby" aria-label="Poznaj ofertę: Wianki na groby">Poznaj ofertę →</a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -140,7 +149,7 @@
           Każda kompozycja jest przygotowywana indywidualnie, z dbałością o najmniejszy szczegół.
         </p>
         <div>
-          <button class="btn btn--outline" type="button" data-order-open>Poznaj ofertę →</button>
+          <a class="btn btn--outline" href="#kompozycje">Poznaj kompozycje →</a>
         </div>
       </div>
     </section>
@@ -168,6 +177,7 @@
           <p class="catalog__count" role="status" data-catalog-count></p>
           <button class="catalog__reset" type="button" data-catalog-reset disabled>Wyczyść filtry</button>
         </div>
+        <div class="catalog__notice" data-catalog-notice role="status" hidden></div>
         <div class="catalog__grid" data-catalog-grid aria-busy="true"></div>
         <div class="catalog__message" data-catalog-message hidden></div>
         <noscript><p class="catalog__message">Do wyświetlenia katalogu potrzebny jest JavaScript.</p></noscript>
@@ -179,7 +189,7 @@
         <div class="section-head">
           <p class="section-kicker">Jak zamówić</p>
           <h2 id="process-title">Zostaw kontakt.<br>Resztą zajmiemy się my.</h2>
-          <p>Skontaktujemy się z Tobą i wspólnie ustalimy szczegóły.</p>
+          <p>Szukasz kompozycji dopasowanej do konkretnych oczekiwań? Przygotujemy ją na indywidualne zamówienie, dobierając kwiaty, kolorystykę i dodatki zgodnie z Twoimi potrzebami.</p>
         </div>
 
         <ol class="steps">
@@ -210,6 +220,11 @@
         </div>
       </div>
     </section>
+
+    <!--
+      SEKCJA UKRYTA NA PRZYSZŁOŚĆ: „Nasze kompozycje" (3 wiersze zdjęcie + tekst, style .gallery* w css/styles.css,
+      zdjęcia assets/images/gallery-*.webp). Usunięta ze strony na życzenie, zachowana do ewentualnego przywrócenia:
+      żeby ją włączyć, usuń znaczniki komentarza (początek i koniec tego bloku). Teksty są jeszcze w wersji pogrzebowej.
 
     <section class="section gallery" aria-labelledby="gallery-title">
       <div class="container">
@@ -270,6 +285,7 @@
         </div>
       </div>
     </section>
+    -->
 
     <section class="section final-cta" aria-labelledby="cta-title">
       <div class="container">
@@ -277,7 +293,7 @@
           <p class="section-kicker">Pracownia florystyczna</p>
           <h2 class="final-cta__title" id="cta-title">Wyraź pamięć<br>pięknymi kwiatami</h2>
           <p class="final-cta__text">Wybierz kompozycję i zamów ją w kilka minut.</p>
-          <button class="btn btn--gold" type="button" data-order-open>Zamów wiązankę →</button>
+          <button class="btn btn--gold" type="button" data-order-open>Kontakt →</button>
         </div>
       </div>
     </section>

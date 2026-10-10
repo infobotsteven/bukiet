@@ -121,19 +121,35 @@
     return result.items;
   };
 
+  // Pole „okazja" może zawierać kilka wartości rozdzielonych przecinkami ("Ślub, Chrzciny").
+  // Zwraca unikalne (po normalizacji) pary { key, label }; puste fragmenty są pomijane.
+  const parseOccasions = (text) => {
+    const unique = new Map();
+    String(text || "")
+      .split(",")
+      .forEach((part) => {
+        const label = part.trim();
+        const key = normalize(label);
+        if (key && !unique.has(key)) unique.set(key, label);
+      });
+    return [...unique].map(([key, label]) => ({ key, label }));
+  };
+
   // Czyści i uzupełnia pozycje; wyróżnione na początek (kolejność z arkusza poza tym zachowana).
   const prepare = (rawItems) => {
     const items = rawItems
       .filter((item) => item && item.id && item.name)
       .map((item) => {
-        const occasion = String(item.occasion || "").trim();
-        const occasionKey = normalize(occasion);
+        const listed = parseOccasions(item.occasion);
+        const occasions = listed.filter(({ key }) => !UNIVERSAL_OCCASIONS.includes(key));
+        // Znaczki na zdjęciu: konkretne okazje, a gdy są tylko uniwersalne ("Każda okazja"), ta uniwersalna.
+        const labels = (occasions.length ? occasions : listed).map(({ label }) => capitalize(label));
         return {
           id: String(item.id),
           name: String(item.name),
-          occasion,
-          occasionKey,
-          universal: occasionKey === "" || UNIVERSAL_OCCASIONS.includes(occasionKey),
+          occasions,
+          occasionLabels: labels,
+          universal: occasions.length < listed.length || listed.length === 0,
           description: String(item.description || ""),
           price: String(item.price || ""),
           priceValue: parsePrice(item.price),
@@ -162,11 +178,13 @@
     const count = root.querySelector("[data-catalog-count]");
     const grid = root.querySelector("[data-catalog-grid]");
     const message = root.querySelector("[data-catalog-message]");
+    const notice = root.querySelector("[data-catalog-notice]");
     const lightbox = document.querySelector("[data-lightbox]");
     const lightboxImage = lightbox && lightbox.querySelector("[data-lightbox-image]");
     const lightboxCaption = lightbox && lightbox.querySelector("[data-lightbox-caption]");
 
     const state = { items: [], occasion: "all", maxPrice: Infinity, priceMax: 0 };
+    let pendingCategory = null;   // kategoria wybrana w ofercie, zanim katalog się wczytał
 
     // Powiększenie zdjęcia: natywny <dialog> (Esc, pułapka fokusu i przywrócenie fokusu za darmo).
     const openLightbox = (img, item) => {
@@ -216,7 +234,11 @@
         ribbon.append(el("span", "product__ribbon-star", "★"), " Polecane");
         media.append(ribbon);
       }
-      if (item.occasion) media.append(el("span", "product__occasion", capitalize(item.occasion)));
+      if (item.occasionLabels.length) {
+        const tags = el("div", "product__occasions");
+        tags.append(...item.occasionLabels.map((label) => el("span", "product__occasion", label)));
+        media.append(tags);
+      }
 
       const body = el("div", "product__body");
       body.append(el("h3", "product__title", item.name));
@@ -241,6 +263,7 @@
         ...Array.from({ length: SKELETON_COUNT }, () => el("div", "card product product--skeleton"))
       );
       message.hidden = true;
+      notice.hidden = true;
       filters.hidden = true;
       summary.hidden = true;
       count.textContent = "";
@@ -262,6 +285,7 @@
     const showMessage = (text, actionLabel, onAction) => {
       grid.replaceChildren();
       grid.removeAttribute("aria-busy");
+      notice.hidden = true;
       filters.hidden = true;
       summary.hidden = true;
       count.textContent = "";
@@ -269,7 +293,8 @@
     };
 
     const matches = (item) => {
-      const occasionOk = state.occasion === "all" || item.universal || item.occasionKey === state.occasion;
+      const occasionOk =
+        state.occasion === "all" || item.universal || item.occasions.some(({ key }) => key === state.occasion);
       const priceOk =
         state.maxPrice >= state.priceMax || (item.priceValue !== null && item.priceValue <= state.maxPrice);
       return occasionOk && priceOk;
@@ -279,12 +304,19 @@
       const visible = state.items.filter(matches);
       grid.removeAttribute("aria-busy");
       message.hidden = true;
+      notice.hidden = true;
       grid.replaceChildren(...visible.map(createProduct));
       count.textContent = `Znaleziono: ${visible.length} ${pluralize(visible.length)}`;
       if (visible.length === 0) setMessage("Brak kompozycji dla wybranych filtrów.", "Wyczyść filtry", resetFilters);
       const isFiltered = state.occasion !== "all" || state.maxPrice < state.priceMax;
       summary.hidden = false;
       resetButton.disabled = !isFiltered;
+    };
+
+    const syncChips = () => {
+      chips.querySelectorAll(".chip").forEach((c) =>
+        c.setAttribute("aria-pressed", String(c.dataset.occasion === state.occasion))
+      );
     };
 
     const renderChips = (occasions) => {
@@ -295,9 +327,7 @@
         chip.setAttribute("aria-pressed", String(state.occasion === key));
         chip.addEventListener("click", () => {
           state.occasion = key;
-          chips.querySelectorAll(".chip").forEach((c) =>
-            c.setAttribute("aria-pressed", String(c.dataset.occasion === key))
-          );
+          syncChips();
           renderList();
         });
         return chip;
@@ -313,26 +343,64 @@
         state.maxPrice >= state.priceMax ? "dowolna" : `${state.maxPrice.toLocaleString("pl-PL")} zł`;
     };
 
-    const resetFilters = () => {
+    const clearFilters = () => {
       state.occasion = "all";
       state.maxPrice = state.priceMax;
       priceInput.value = String(state.priceMax);
-      chips.querySelectorAll(".chip").forEach((c) =>
-        c.setAttribute("aria-pressed", String(c.dataset.occasion === "all"))
-      );
+      syncChips();
       updatePriceLabel();
+    };
+
+    const resetFilters = () => {
+      clearFilters();
       renderList();
+    };
+
+    // Informacja o braku kompozycji w kategorii (pod filtrami; reszta katalogu zostaje widoczna).
+    const showCategoryNotice = (category) => {
+      const action = el("button", "btn btn--outline", "Zostaw kontakt");
+      action.type = "button";
+      action.addEventListener("click", () => document.dispatchEvent(new CustomEvent("order:open")));
+      notice.replaceChildren(
+        el(
+          "p",
+          "catalog__notice-text",
+          `Obecnie nie mamy w katalogu kompozycji z kategorii „${category}”. Poniżej pozostałe kompozycje; jeśli szukasz czegoś konkretnego, zostaw kontakt.`
+        ),
+        action
+      );
+      notice.hidden = false;
+    };
+
+    // Kategoria z kart oferty = jedna z okazji z arkusza (porównanie bez wielkości liter i ogonków).
+    const applyCategory = (category) => {
+      const key = normalize(category);
+      const exists = state.items.some((item) => item.occasions.some((o) => o.key === key));
+      clearFilters();
+      if (exists) {
+        state.occasion = key;
+        syncChips();
+      }
+      renderList();
+      if (!exists) showCategoryNotice(category);
+    };
+
+    // Katalog jeszcze się ładuje (lub nie ma pozycji): kategoria czeka na dane.
+    const requestCategory = (category) => {
+      if (state.items.length > 0) applyCategory(category);
+      else pendingCategory = category;
     };
 
     const setupFilters = () => {
       // Okazje: grupujemy bez względu na wielkość liter i ogonki; etykieta z wariantu z polskimi znakami, jeśli jest.
       const groups = new Map();
-      state.items.forEach((item) => {
-        if (item.universal) return;
-        const known = groups.get(item.occasionKey);
-        const better = !known || (/[^\x00-\x7f]/.test(item.occasion) && !/[^\x00-\x7f]/.test(known));
-        if (better) groups.set(item.occasionKey, item.occasion);
-      });
+      state.items.forEach((item) =>
+        item.occasions.forEach(({ key, label }) => {
+          const known = groups.get(key);
+          const better = !known || (/[^\x00-\x7f]/.test(label) && !/[^\x00-\x7f]/.test(known));
+          if (better) groups.set(key, label);
+        })
+      );
       const occasions = [...groups].map(([key, label]) => ({ key, label: capitalize(label) }));
       occasionGroup.hidden = occasions.length < 2;
       renderChips(occasions);
@@ -366,6 +434,11 @@
       }
       setupFilters();
       renderList();
+      if (pendingCategory) {
+        const category = pendingCategory;
+        pendingCategory = null;
+        applyCategory(category);
+      }
     };
 
     const load = async () => {
@@ -392,6 +465,11 @@
       renderList();
     });
     resetButton.addEventListener("click", resetFilters);
+
+    // Przyciski „Poznaj ofertę" w kartach oferty: link do #kompozycje przewija, a my ustawiamy filtr.
+    document.querySelectorAll("[data-catalog-category]").forEach((link) =>
+      link.addEventListener("click", () => requestCategory(link.dataset.catalogCategory))
+    );
 
     if (lightbox) {
       lightbox.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
