@@ -356,19 +356,31 @@
       renderList();
     };
 
-    // Informacja o braku kompozycji w kategorii (pod filtrami; reszta katalogu zostaje widoczna).
+    // Pusta kategoria: zamiast listy komunikat z dwiema akcjami (lista produktów zostaje pusta, filtry widoczne).
     const showCategoryNotice = (category) => {
-      const action = el("button", "btn btn--outline", "Zostaw kontakt");
-      action.type = "button";
-      action.addEventListener("click", () => document.dispatchEvent(new CustomEvent("order:open")));
+      grid.replaceChildren();
+      grid.removeAttribute("aria-busy");
+      message.hidden = true;
+      summary.hidden = true;
+      count.textContent = "";
+      chips.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", "false"));
+
+      const showAll = el("button", "btn btn--gold", "Wyświetl wszystkie");
+      showAll.type = "button";
+      showAll.addEventListener("click", resetFilters);
+      const contact = el("button", "btn btn--outline", "Kontakt");
+      contact.type = "button";
+      contact.addEventListener("click", () => document.dispatchEvent(new CustomEvent("order:open")));
+
       notice.replaceChildren(
         el(
           "p",
           "catalog__notice-text",
-          `Obecnie nie mamy w katalogu kompozycji z kategorii „${category}”. Poniżej pozostałe kompozycje; jeśli szukasz czegoś konkretnego, zostaw kontakt.`
+          `Obecnie nie mamy w katalogu kompozycji z kategorii „${category}”. Zobacz pozostałe kompozycje lub zostaw kontakt.`
         ),
-        action
+        el("div", "catalog__notice-actions")
       );
+      notice.lastElementChild.append(showAll, contact);
       notice.hidden = false;
     };
 
@@ -377,12 +389,13 @@
       const key = normalize(category);
       const exists = state.items.some((item) => item.occasions.some((o) => o.key === key));
       clearFilters();
-      if (exists) {
-        state.occasion = key;
-        syncChips();
+      if (!exists) {
+        showCategoryNotice(category);
+        return;
       }
+      state.occasion = key;
+      syncChips();
       renderList();
-      if (!exists) showCategoryNotice(category);
     };
 
     // Katalog jeszcze się ładuje (lub nie ma pozycji): kategoria czeka na dane.

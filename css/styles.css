@@ -607,7 +607,7 @@ h2 {
   text-align: center;
 }
 
-/* Informacja po wyborze kategorii z oferty, w której nie ma jeszcze kompozycji. */
+/* Komunikat po wyborze kategorii z oferty, w której nie ma jeszcze kompozycji (zastępuje listę). */
 .catalog__notice {
   margin: 0 auto 28px;
   padding: 18px 20px;
@@ -624,6 +624,13 @@ h2 {
 
 .catalog__notice-text {
   margin: 0 0 14px;
+}
+
+.catalog__notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
 
 /* Flex zamiast siatki: niepełny rząd (np. 2 karty po filtrowaniu) jest wyśrodkowany. */
