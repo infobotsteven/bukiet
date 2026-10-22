@@ -8,7 +8,7 @@
   const FETCH_TIMEOUT_MS = 15000;
   const SKELETON_COUNT = 3;
   const PRICE_STEP = 50;
-  const PRODUCT_IMAGE_SIZE = { width: 640, height: 480 };   // proporcje 4:3 jak w CSS (zapobiega skokom układu)
+  const PRODUCT_IMAGE_SIZE = { width: 640, height: 640 };   // proporcje 1:1 jak w CSS (zapobiega skokom układu)
 
   const IMAGE_DIR = "assets/images/katalog/";
   const PLACEHOLDERS = [

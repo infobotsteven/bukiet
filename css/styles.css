@@ -707,7 +707,7 @@ h2 {
 .product__image {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
@@ -798,7 +798,7 @@ h2 {
 }
 
 .product--skeleton {
-  min-height: 430px;
+  aspect-ratio: 1 / 1.4;                 /* zdjęcie 1:1 + treść karty, żeby po załadowaniu układ nie skakał */
   border: 0;
   background: linear-gradient(90deg, #f3ece2 25%, #fbf7f1 50%, #f3ece2 75%);
   background-size: 200% 100%;
