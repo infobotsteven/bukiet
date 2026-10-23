@@ -13,6 +13,7 @@
    9a. Katalog (gotowe kompozycje z arkusza)
   10. O nas
   11. Jak zamówić
+  11a. Odbiór zamówień (mapa)
   12. Galeria
   13. CTA końcowe
   14. Stopka
@@ -414,6 +415,15 @@ h2 {
   text-transform: uppercase;
 }
 
+/* Złota linia pod nagłówkiem sekcji (O nas, odbiór zamówień). */
+.divider {
+  width: 90px;
+  height: 1px;
+  margin: 20px 0;
+  border: 0;
+  background: var(--color-gold);
+}
+
 /* Przycisk pod treścią sekcji (oferta, jak zamówić). */
 .section__cta {
   margin-top: 44px;
@@ -455,8 +465,9 @@ h2 {
   object-fit: cover;
 }
 
-/* Treść karty rozciąga się, więc przyciski w sąsiednich kartach są na jednej linii. */
-.card__body {
+/* Treść karty rozciąga się, więc przyciski w sąsiednich kartach są na jednej linii (oferta i katalog). */
+.card__body,
+.product__body {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -747,13 +758,6 @@ h2 {
   text-transform: uppercase;
 }
 
-.product__body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 24px;
-}
-
 .product__title {
   margin: 0 0 9px;
   color: var(--color-olive);
@@ -844,14 +848,6 @@ h2 {
   color: var(--color-muted);
 }
 
-.story__divider {
-  width: 90px;
-  height: 1px;
-  margin: 20px 0;
-  border: 0;
-  background: var(--color-gold);
-}
-
 /* 11. Jak zamówić
    ========================================================================== */
 .process {
@@ -892,6 +888,56 @@ h2 {
   margin: 0;
   color: var(--color-muted);
   font-size: 14px;
+}
+
+/* 11a. Odbiór zamówień (mapa)
+   ========================================================================== */
+.pickup {
+  background: var(--color-cream);
+}
+
+.pickup__layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.pickup__stand {
+  margin: 0 0 14px;
+  color: var(--color-olive);
+  font-size: 26px;
+}
+
+.pickup__text {
+  max-width: 480px;
+  margin: 0 0 22px;
+  color: var(--color-muted);
+}
+
+.pickup__stop {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.pickup__label {                       /* wygląd z .section-kicker, tu tylko układ */
+  display: block;
+  margin-bottom: 4px;
+}
+
+.pickup__map {
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-cream-dark);
+  box-shadow: var(--shadow-card);
+}
+
+.pickup__map iframe {
+  display: block;
+  width: 100%;
+  height: 440px;
+  border: 0;
 }
 
 /* 12. Galeria
@@ -1428,8 +1474,13 @@ textarea.field__control {
     border-bottom: 1px solid var(--color-line);
   }
 
-  .story {
+  .story,
+  .pickup__layout {
     grid-template-columns: 1fr;
+  }
+
+  .pickup__layout {
+    gap: 36px;
   }
 
   .story__image {
@@ -1470,6 +1521,10 @@ textarea.field__control {
 }
 
 @media (max-width: 520px) {
+  .pickup__map iframe {
+    height: 320px;
+  }
+
   .container {
     width: min(var(--container-width), calc(100% - 28px));
   }

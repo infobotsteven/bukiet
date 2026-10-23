@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src https://script.google.com https://script.googleusercontent.com; frame-src https://www.openstreetmap.org; base-uri 'self'; form-action 'none'; object-src 'none'">
   <title>Kwiaty z Sercem | Pracownia Florystyczna</title>
   <meta name="description" content="Kwiaty z Sercem - pracownia florystyczna. Eleganckie kompozycje kwiatowe na zamówienie, przygotowywane z dbałością o każdy detal.">
   <meta name="theme-color" content="#f8f3ec">
@@ -40,6 +40,7 @@
         <li><a href="#o-nas">O nas</a></li>
         <li><a href="#kompozycje">Kompozycje</a></li>
         <li><a href="#jak-zamowic">Jak zamówić</a></li>
+        <li><a href="#odbior">Odbiór</a></li>
         <li class="nav__cta-mobile">
           <button class="btn btn--gold" type="button" data-order-open>Kontakt →</button>
         </li>
@@ -145,7 +146,7 @@
       <div class="story__copy">
         <p class="section-kicker">Kwiaty z Sercem</p>
         <h2 class="story__title" id="story-title">Piękno, które zostaje w pamięci</h2>
-        <hr class="story__divider">
+        <hr class="divider">
         <p class="story__text">
           Wierzymy, że kwiaty potrafią powiedzieć więcej niż słowa.
           Dlatego tworzymy wiązanki spokojne, eleganckie i pełne znaczenia.
@@ -220,6 +221,31 @@
 
         <div class="section__cta">
           <button class="btn btn--gold" type="button" data-order-open>Zostaw kontakt →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pickup" id="odbior" aria-labelledby="pickup-title">
+      <div class="container pickup__layout">
+        <div class="pickup__info">
+          <p class="section-kicker">Lokalizacja</p>
+          <h2 id="pickup-title">Odbiór zamówień</h2>
+          <hr class="divider">
+          <h3 class="pickup__stand">Stoisko nr 5, Cmentarz Wojskowy na Powązkach</h3>
+          <p class="pickup__text">
+            Zamówienia możesz odebrać na naszym stoisku przy ul. Powązkowskiej 43/45,
+            na rogu ul. Ostrowieckiej, przy bramie nr 2 Cmentarza Wojskowego na Powązkach.
+          </p>
+          <p class="pickup__stop">
+            <span class="section-kicker pickup__label">Najbliższy przystanek</span>
+            Powązki - Cmentarz Wojskowy 01
+          </p>
+        </div>
+
+        <div class="pickup__map">
+          <iframe title="Mapa: stoisko nr 5 przy bramie nr 2 Cmentarza Wojskowego na Powązkach"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=20.9540%2C52.2582%2C20.9604%2C52.2616&amp;layer=mapnik&amp;marker=52.25990%2C20.95720"
+                  loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
         </div>
       </div>
     </section>
