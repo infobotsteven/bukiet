@@ -49,6 +49,38 @@
     return svg;
   };
 
+  // Wyrównuje kontener mapy do siatki pikseli urządzenia. Gdy kontener leży na ułamkowej pozycji strony
+  // (np. 256,06 px na ekranie 2×), krawędzie kafelków wypadają między pikselami i na styku widać jasne szwy.
+  // Przesunięcie jest mniejsze niż piksel urządzenia i nie zmienia układu strony (transform, nie margines).
+  const alignToPixels = (container) => {
+    const dpr = window.devicePixelRatio || 1;
+    container.style.transform = "";
+    const rect = container.getBoundingClientRect();
+    const shift = (position) => {
+      const fraction = (position * dpr) % 1;
+      if (fraction < 0.001 || fraction > 0.999) return 0;
+      return (fraction < 0.5 ? -fraction : 1 - fraction) / dpr;
+    };
+    const dx = shift(rect.left + window.scrollX);
+    const dy = shift(rect.top + window.scrollY);
+    if (dx || dy) container.style.transform = `translate(${dx}px, ${dy}px)`;
+  };
+
+  const keepAligned = (container) => {
+    let queued = false;
+    const schedule = () => {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(() => {
+        queued = false;
+        alignToPixels(container);
+      });
+    };
+    alignToPixels(container);
+    window.addEventListener("resize", schedule);
+    if ("ResizeObserver" in window) new ResizeObserver(schedule).observe(document.body);   // zmiany układu nad mapą
+  };
+
   const initMap = (container) => {
     const lat = Number(container.dataset.lat);
     const lng = Number(container.dataset.lng);
@@ -62,7 +94,9 @@
       scrollWheelZoom: false,                    // kółko myszy przewija stronę, a nie mapę
       dragging: !window.L.Browser.mobile,        // na telefonie jeden palec przewija stronę, dwa palce przybliżają mapę
     });
-    window.L.tileLayer(TILES_URL, { maxZoom: 19, attribution: ATTRIBUTION }).addTo(map);
+    // detectRetina: na ekranach 2× kafelki idą w podwójnej rozdzielczości (bez skalowania 256 px → 512 px),
+    // dzięki czemu nie powstają jasne szwy na styku kafelków, a mapa jest ostrzejsza.
+    window.L.tileLayer(TILES_URL, { maxZoom: 19, detectRetina: true, attribution: ATTRIBUTION }).addTo(map);
 
     const icon = window.L.divIcon({
       className: "map-pin",
@@ -71,6 +105,8 @@
       iconAnchor: [PIN_SIZE.width / 2, PIN_SIZE.height],   // czubek pinezki dokładnie w punkcie
     });
     window.L.marker([lat, lng], { icon, title: container.dataset.label || "", keyboard: false }).addTo(map);
+
+    keepAligned(container);
 
     // Po kliknięciu w mapę kółko myszy przybliża ją, po opuszczeniu mapy znowu przewija stronę.
     container.addEventListener("click", () => map.scrollWheelZoom.enable());
