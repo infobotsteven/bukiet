@@ -8,6 +8,10 @@
   const FETCH_TIMEOUT_MS = 15000;
   const SKELETON_COUNT = 3;
   const PRICE_STEP = 50;
+  // Filtr okazji (chipy) i filtrowanie z przycisków „Poznaj ofertę" w sekcji oferty są NA RAZIE WYŁĄCZONE
+  // (decyzja z 2026-10-23: katalog pokazuje wszystkie kompozycje). Kod kategorii zostaje do ponownego
+  // włączenia po aktualizacji mechanizmu: wystarczy ustawić true.
+  const CATEGORY_FILTER_ENABLED = false;
   const PRODUCT_IMAGE_SIZE = { width: 640, height: 640 };   // proporcje 1:1 jak w CSS (zapobiega skokom układu)
 
   const IMAGE_DIR = "assets/images/katalog/";
@@ -234,7 +238,7 @@
         ribbon.append(el("span", "product__ribbon-star", "★"), " Polecane");
         media.append(ribbon);
       }
-      if (item.occasionLabels.length) {
+      if (CATEGORY_FILTER_ENABLED && item.occasionLabels.length) {   // znaczki okazji wracają razem z kategoriami
         const tags = el("div", "product__occasions");
         tags.append(...item.occasionLabels.map((label) => el("span", "product__occasion", label)));
         media.append(tags);
@@ -313,7 +317,7 @@
       count.textContent = `Znaleziono: ${visible.length} ${pluralize(visible.length)}`;
       if (visible.length === 0) setMessage("Brak kompozycji dla wybranych filtrów.", "Wyczyść filtry", resetFilters);
       const isFiltered = state.occasion !== "all" || state.maxPrice < state.priceMax;
-      summary.hidden = false;
+      summary.hidden = filters.hidden;   // bez żadnego filtra licznik i „Wyczyść filtry" są zbędne
       resetButton.disabled = !isFiltered;
     };
 
@@ -418,7 +422,7 @@
         })
       );
       const occasions = [...groups].map(([key, label]) => ({ key, label: capitalize(label) }));
-      occasionGroup.hidden = occasions.length < 2;
+      occasionGroup.hidden = !CATEGORY_FILTER_ENABLED || occasions.length < 2;
       renderChips(occasions);
 
       // Cena: suwak od najtańszej do najdroższej (zaokrąglone do kroku). Suwak na maksimum = bez filtra.
@@ -482,10 +486,13 @@
     });
     resetButton.addEventListener("click", resetFilters);
 
-    // Przyciski „Poznaj ofertę" w kartach oferty: link do #kompozycje przewija, a my ustawiamy filtr.
-    document.querySelectorAll("[data-catalog-category]").forEach((link) =>
-      link.addEventListener("click", () => requestCategory(link.dataset.catalogCategory))
-    );
+    // Przyciski „Poznaj ofertę" w kartach oferty: link do #kompozycje przewija do katalogu,
+    // a przy włączonym filtrze kategorii dodatkowo ustawiamy filtr.
+    if (CATEGORY_FILTER_ENABLED) {
+      document.querySelectorAll("[data-catalog-category]").forEach((link) =>
+        link.addEventListener("click", () => requestCategory(link.dataset.catalogCategory))
+      );
+    }
 
     if (lightbox) {
       lightbox.querySelector("[data-lightbox-close]").addEventListener("click", closeLightbox);
