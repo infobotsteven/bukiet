@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src https://script.google.com https://script.googleusercontent.com; frame-src https://www.openstreetmap.org; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
   <title>Kwiaty z Sercem | Pracownia Florystyczna</title>
   <meta name="description" content="Kwiaty z Sercem - pracownia florystyczna. Eleganckie kompozycje kwiatowe na zamówienie, przygotowywane z dbałością o każdy detal.">
   <meta name="theme-color" content="#f8f3ec">
@@ -25,6 +25,7 @@
   <script src="js/utils.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/catalog.js" defer></script>
+  <script src="js/map.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Przejdź do treści</a>
@@ -242,10 +243,12 @@
           </p>
         </div>
 
-        <div class="pickup__map">
-          <iframe title="Mapa: stoisko nr 5 przy bramie nr 2 Cmentarza Wojskowego na Powązkach"
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=20.9540%2C52.2582%2C20.9604%2C52.2616&amp;layer=mapnik&amp;marker=52.25990%2C20.95720"
-                  loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        <div class="pickup__map" data-map data-lat="52.25990" data-lng="20.95720" data-zoom="17"
+             data-label="Stoisko nr 5, brama nr 2 Cmentarza Wojskowego na Powązkach"
+             role="region" aria-label="Mapa: stoisko nr 5 przy bramie nr 2 Cmentarza Wojskowego na Powązkach">
+          <a class="pickup__map-fallback"
+             href="https://www.openstreetmap.org/?mlat=52.25990&amp;mlon=20.95720#map=18/52.25990/20.95720"
+             target="_blank" rel="noopener">Zobacz stoisko na mapie →</a>
         </div>
       </div>
     </section>
