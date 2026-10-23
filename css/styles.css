@@ -437,10 +437,19 @@ h2 {
   background: var(--color-paper);
 }
 
-.offers__grid {
+.offers__showcase {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--catalog-gap);
+}
+
+.offers__showcase img {
+  width: 100%;
+  height: auto;                          /* atrybut height na <img> ignorowałby aspect-ratio */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
 }
 
 .card {
@@ -459,36 +468,12 @@ h2 {
   transform: translateY(-5px);
 }
 
-.card__image {
-  width: 100%;
-  height: auto;                          /* atrybut height na <img> ignorowałby aspect-ratio */
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-/* Treść karty rozciąga się, więc przyciski w sąsiednich kartach są na jednej linii (oferta i katalog). */
-.card__body,
+/* Treść karty katalogu rozciąga się, więc przyciski w sąsiednich kartach są na jednej linii. */
 .product__body {
   display: flex;
   flex: 1;
   flex-direction: column;
   padding: 24px;
-}
-
-.card__title {
-  margin: 0 0 9px;
-  color: var(--color-olive);
-  font-size: 24px;
-}
-
-.card__text {
-  margin: 0 0 18px;
-  color: var(--color-muted);
-  font-size: 14px;
-}
-
-.card__body .btn {
-  margin-top: auto;
 }
 
 .card__link {
@@ -1461,10 +1446,6 @@ textarea.field__control {
 }
 
 @media (max-width: 1000px) {
-  .offers__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .catalog__grid > .product {
     flex-basis: calc((100% - var(--catalog-gap)) / 2);
   }
@@ -1559,8 +1540,12 @@ textarea.field__control {
 }
 
 @media (max-width: 640px) {
-  .offers__grid {
-    grid-template-columns: 1fr;
+  .offers__showcase {
+    gap: 10px;
+  }
+
+  .offers__showcase img {
+    border-radius: 12px;
   }
 
   .catalog__grid > .product {
