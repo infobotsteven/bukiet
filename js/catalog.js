@@ -238,11 +238,11 @@
         ribbon.append(el("span", "product__ribbon-star", "★"), " Polecane");
         media.append(ribbon);
       }
-      if (CATEGORY_FILTER_ENABLED && item.occasionLabels.length) {   // znaczki okazji wracają razem z kategoriami
-        const tags = el("div", "product__occasions");
-        tags.append(...item.occasionLabels.map((label) => el("span", "product__occasion", label)));
-        media.append(tags);
-      }
+      // Znaczek na zdjęciu: „Kompozycja Id<numer z arkusza>"; przy włączonych kategoriach dochodzą znaczki okazji.
+      const labels = [`Kompozycja Id${item.id}`, ...(CATEGORY_FILTER_ENABLED ? item.occasionLabels : [])];
+      const tags = el("div", "product__tags");
+      tags.append(...labels.map((label) => el("span", "product__tag", label)));
+      media.append(tags);
 
       const body = el("div", "product__body");
       body.append(el("h3", "product__title", item.name));

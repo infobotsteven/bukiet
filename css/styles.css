@@ -696,7 +696,7 @@ h2 {
   opacity: 1;
 }
 
-.product__occasions,
+.product__tags,
 .product__ribbon {
   pointer-events: none;                  /* klik w znaczek otwiera zdjęcie */
 }
@@ -708,8 +708,8 @@ h2 {
   object-fit: cover;
 }
 
-/* Okazje kompozycji: każda we własnym znaczku, zawijane do kolejnego rzędu. */
-.product__occasions {
+/* Znaczki na zdjęciu karty (numer kompozycji, ewentualnie okazje): każdy osobno, zawijane do kolejnego rzędu. */
+.product__tags {
   position: absolute;
   right: 14px;
   bottom: 14px;
@@ -719,7 +719,7 @@ h2 {
   gap: 6px;
 }
 
-.product__occasion {
+.product__tag {
   padding: 6px 12px;
   border-radius: var(--radius-pill);
   background: var(--color-paper-glass);
