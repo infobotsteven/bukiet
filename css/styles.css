@@ -47,7 +47,6 @@
   --color-paper-glass: rgba(255, 253, 249, 0.92);
   --color-error: #9b2c2c;
   --color-line: rgba(63, 68, 48, 0.15);
-  --color-map-land: #f2efe9;             /* kolor lądu na mapie OpenStreetMap (tło mapy pod kafelkami) */
   --color-success: #2e7d4f;
   --color-success-bg: #eef7f1;
   --color-success-text: #1f5a37;
@@ -911,12 +910,11 @@ h2 {
   margin-bottom: 4px;
 }
 
-/* Kontener mapy Leaflet (js/map.js). isolation: panele Leaflet mają z-index do 800 i bez izolacji
-   nachodziłyby na przyklejony nagłówek strony. */
+/* Mapa odbioru: statyczny obraz z kafelków OpenStreetMap (assets/images/mapa-odbior.webp, zdjęcie z 2026-10-26)
+   z własną pinezką; całość jest linkiem do większej mapy na openstreetmap.org. Nie pobieramy kafelków
+   w trakcie działania strony (serwery OSM potrafią zablokować dostęp niektórym klientom). */
 .pickup__map {
   position: relative;
-  z-index: 0;
-  isolation: isolate;
   height: 440px;
   overflow: hidden;
   border: 1px solid var(--color-line);
@@ -925,39 +923,31 @@ h2 {
   box-shadow: var(--shadow-card);
 }
 
-/* Link widoczny tylko wtedy, gdy mapa się nie wczyta (brak JS lub biblioteki). */
-.pickup__map-fallback {
+.pickup__map-link {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--color-gold-dark);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 12px;
 }
 
-/* Tło w kolorze lądu z mapy OpenStreetMap: przy ułamkowej pozycji strony między kafelkami bywa widoczny
-   cienki prześwit i w tym kolorze zlewa się z mapą. */
-.pickup__map.leaflet-container {
-  background: var(--color-map-land);
-  font-family: var(--font-sans);
+/* Obraz jest większy od ramki i przycinany równo ze wszystkich stron: jego środek (punkt stoiska) leży w środku ramki. */
+.pickup__map-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 750px;                          /* połowa pikseli pliku (gęstość 2×) */
+  max-width: none;
+  height: 550px;
+  margin: -275px 0 0 -375px;
+  filter: sepia(0.18) saturate(0.9);     /* lekko ocieplona mapa pasuje do kremowej palety strony */
 }
 
-.pickup__map.leaflet-fade-anim .leaflet-tile {
-  will-change: auto;                     /* domyślna podpowiedź Leaflet nasila szwy w Chrome */
-}
-
-/* Kafelki OpenStreetMap lekko ocieplone, żeby mapa pasowała do kremowej palety strony. */
-.pickup__map .leaflet-tile-pane {
-  filter: sepia(0.18) saturate(0.9);
-}
-
-/* Pinezka w kolorze marki (bordo z ikony i logo). */
-.map-pin {
-  background: none;
-  border: 0;
+/* Pinezka w kolorze marki (bordo z ikony i logo); czubek dokładnie w środku mapy. */
+.pickup__pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -46px 0 0 -18px;
+  pointer-events: none;
 }
 
 .map-pin__svg {
@@ -975,6 +965,38 @@ h2 {
 
 .map-pin__dot {
   fill: var(--color-white);
+}
+
+.pickup__map-hint,
+.pickup__map-credit {
+  position: absolute;
+  bottom: 12px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-paper-glass);
+  color: var(--color-olive);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pickup__map-hint {
+  left: 12px;
+}
+
+.pickup__map-link:hover .pickup__map-hint,
+.pickup__map-link:focus-visible .pickup__map-hint {
+  background: var(--color-white);
+  color: var(--color-gold-dark);
+}
+
+/* Podpis wymagany licencją OpenStreetMap: zawsze widoczny, osobny link (nie wewnątrz linku mapy). */
+.pickup__map-credit {
+  right: 12px;
+  padding: 4px 9px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: none;
 }
 
 /* 12. Galeria
@@ -1560,6 +1582,10 @@ textarea.field__control {
 @media (max-width: 520px) {
   .pickup__map {
     height: 320px;
+  }
+
+  .pickup__map-hint {
+    bottom: 44px;                        /* nad podpisem OSM, żeby plakietki nie nachodziły na siebie na wąskich ekranach */
   }
 
   .container {

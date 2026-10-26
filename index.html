@@ -25,7 +25,6 @@
   <script src="js/utils.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/catalog.js" defer></script>
-  <script src="js/map.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Przejdź do treści</a>
@@ -214,12 +213,18 @@
           </p>
         </div>
 
-        <div class="pickup__map" data-map data-lat="52.25990" data-lng="20.95720" data-zoom="17"
-             data-label="Stoisko nr 5, brama nr 2 Cmentarza Wojskowego na Powązkach"
-             role="region" aria-label="Mapa: stoisko nr 5 przy bramie nr 2 Cmentarza Wojskowego na Powązkach">
-          <a class="pickup__map-fallback"
-             href="https://www.openstreetmap.org/?mlat=52.25990&amp;mlon=20.95720#map=18/52.25990/20.95720"
-             target="_blank" rel="noopener">Zobacz stoisko na mapie →</a>
+        <div class="pickup__map">
+          <a class="pickup__map-link" href="https://www.openstreetmap.org/?mlat=52.25990&amp;mlon=20.95720#map=18/52.25990/20.95720"
+             target="_blank" rel="noopener" aria-label="Otwórz większą mapę stoiska w OpenStreetMap (nowa karta)">
+            <img class="pickup__map-image" src="assets/images/mapa-odbior.webp" width="1500" height="1100" loading="lazy"
+                 alt="Mapa okolicy Cmentarza Wojskowego na Powązkach z zaznaczonym stoiskiem nr 5 przy bramie nr 2">
+            <svg class="map-pin__svg pickup__pin" viewBox="0 0 36 46" aria-hidden="true">
+              <path class="map-pin__shape" d="M18 2C9.7 2 3 8.7 3 17c0 11 15 27 15 27s15-16 15-27C33 8.7 26.3 2 18 2z"/>
+              <circle class="map-pin__dot" cx="18" cy="17" r="6"/>
+            </svg>
+            <span class="pickup__map-hint">Otwórz większą mapę →</span>
+          </a>
+          <a class="pickup__map-credit" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© autorzy OpenStreetMap</a>
         </div>
       </div>
     </section>
